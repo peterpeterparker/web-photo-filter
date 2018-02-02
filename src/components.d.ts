@@ -6,29 +6,29 @@
 
 
 import {
-  WebPhotoFilterComponent as WebPhotoFilterComponent
-} from './components/web-photo-filter-component/web-photo-filter-component';
+  WebPhotoFilterComponent as WebPhotoFilter
+} from './components/web-photo-filter/web-photo-filter';
 
 declare global {
-  interface HTMLWebPhotoFilterComponentElement extends WebPhotoFilterComponent, HTMLElement {
+  interface HTMLWebPhotoFilterElement extends WebPhotoFilter, HTMLElement {
   }
-  var HTMLWebPhotoFilterComponentElement: {
-    prototype: HTMLWebPhotoFilterComponentElement;
-    new (): HTMLWebPhotoFilterComponentElement;
+  var HTMLWebPhotoFilterElement: {
+    prototype: HTMLWebPhotoFilterElement;
+    new (): HTMLWebPhotoFilterElement;
   };
   interface HTMLElementTagNameMap {
-    "web-photo-filter-component": HTMLWebPhotoFilterComponentElement;
+    "web-photo-filter": HTMLWebPhotoFilterElement;
   }
   interface ElementTagNameMap {
-    "web-photo-filter-component": HTMLWebPhotoFilterComponentElement;
+    "web-photo-filter": HTMLWebPhotoFilterElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "web-photo-filter-component": JSXElements.WebPhotoFilterComponentAttributes;
+      "web-photo-filter": JSXElements.WebPhotoFilterAttributes;
     }
   }
   namespace JSXElements {
-    export interface WebPhotoFilterComponentAttributes extends HTMLAttributes {
+    export interface WebPhotoFilterAttributes extends HTMLAttributes {
       first?: string;
       last?: string;
     }

@@ -1,8 +1,8 @@
 exports.config = {
-  namespace: 'webphotofiltercomponent',
+  namespace: 'webphotofilter',
   generateDistribution: true,
   bundles: [
-    { components: ['web-photo-filter-component'] }
+    { components: ['web-photo-filter'] }
   ]
 };
 

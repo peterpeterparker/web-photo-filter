@@ -2,7 +2,7 @@
   "name": "web-photo-filter",
   "version": "0.0.1",
   "description": "Stencil Component Starter",
-  "main": "dist/webphotofiltercomponent.js",
+  "main": "dist/webphotofilter.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [

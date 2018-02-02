@@ -41,7 +41,7 @@ npm start
 
 Stencil components are plain ES6/TypeScript classes with some decorator metadata.
 
-Create new components by creating files with a `.tsx` extension, such as `web-photo-filter-component.tsx`, and place them in `src/components`.
+Create new components by creating files with a `.tsx` extension, such as `web-photo-filter.tsx`, and place them in `src/components`.
 
 ```typescript
 import { Component, Prop, State } from '@stencil/core';
