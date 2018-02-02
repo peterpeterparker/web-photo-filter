@@ -1,11 +1,11 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'my-component',
-  styleUrl: 'my-component.scss',
+  tag: 'web-photo-filter-component',
+  styleUrl: 'web-photo-filter-component.scss',
   shadow: true
 })
-export class MyComponent {
+export class WebPhotoFilterComponent {
 
   @Prop() first: string;
   @Prop() last: string;

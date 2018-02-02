@@ -1,17 +1,17 @@
 import { flush, render } from '@stencil/core/testing';
-import { MyComponent } from './my-component';
+import { WebPhotoFilterComponent } from './web-photo-filter-component.spec';
 
-describe('my-component', () => {
+describe('web-photo-filter-component', () => {
   it('should build', () => {
-    expect(new MyComponent()).toBeTruthy();
+    expect(new WebPhotoFilterComponent()).toBeTruthy();
   });
 
   describe('rendering', () => {
     let element;
     beforeEach(async () => {
       element = await render({
-        components: [MyComponent],
-        html: '<my-component></my-component>'
+        components: [WebPhotoFilterComponent],
+        html: '<web-photo-filter-component></web-photo-filter-component>'
       });
     });
 

@@ -1,12 +1,12 @@
 exports.config = {
-  namespace: 'mycomponent',
+  namespace: 'webphotofiltercomponent',
   generateDistribution: true,
   bundles: [
-    { components: ['my-component'] }
+    { components: ['web-photo-filter-component'] }
   ]
 };
 
 exports.devServer = {
   root: 'www',
   watchGlob: '**/**'
-}
+};

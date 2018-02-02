@@ -6,32 +6,33 @@
 
 
 import {
-  MyComponent as MyComponent
-} from './components/my-component/my-component';
+  WebPhotoFilterComponent as WebPhotoFilterComponent
+} from './components/web-photo-filter-component/web-photo-filter-component';
 
 declare global {
-  interface HTMLMyComponentElement extends MyComponent, HTMLElement {
+  interface HTMLWebPhotoFilterComponentElement extends WebPhotoFilterComponent, HTMLElement {
   }
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  var HTMLWebPhotoFilterComponentElement: {
+    prototype: HTMLWebPhotoFilterComponentElement;
+    new (): HTMLWebPhotoFilterComponentElement;
   };
   interface HTMLElementTagNameMap {
-    "my-component": HTMLMyComponentElement;
+    "web-photo-filter-component": HTMLWebPhotoFilterComponentElement;
   }
   interface ElementTagNameMap {
-    "my-component": HTMLMyComponentElement;
+    "web-photo-filter-component": HTMLWebPhotoFilterComponentElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "my-component": JSXElements.MyComponentAttributes;
+      "web-photo-filter-component": JSXElements.WebPhotoFilterComponentAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyComponentAttributes extends HTMLAttributes {
+    export interface WebPhotoFilterComponentAttributes extends HTMLAttributes {
       first?: string;
       last?: string;
     }
   }
 }
 
+declare global { namespace JSX { interface StencilJSX {} } }
