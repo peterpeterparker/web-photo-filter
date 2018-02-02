@@ -7,14 +7,12 @@ import { Component, Prop } from '@stencil/core';
 })
 export class WebPhotoFilterComponent {
 
-  @Prop() first: string;
-  @Prop() last: string;
+  @Prop() src: string;
+  @Prop() alt: string;
 
   render() {
     return (
-      <div>
-        Hello, World! I'm {this.first} {this.last}
-      </div>
+      <lazy-img src={this.src} alt={this.alt}></lazy-img>
     );
   }
 }

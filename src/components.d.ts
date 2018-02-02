@@ -60,8 +60,8 @@ declare global {
   }
   namespace JSXElements {
     export interface WebPhotoFilterAttributes extends HTMLAttributes {
-      first?: string;
-      last?: string;
+      alt?: string;
+      src?: string;
     }
   }
 }
