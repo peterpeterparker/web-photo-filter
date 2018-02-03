@@ -2,7 +2,7 @@ exports.config = {
   namespace: 'webphotofilter',
   generateDistribution: true,
   bundles: [
-    { components: ['web-photo-filter', 'lazy-img'] }
+    { components: ['web-photo-filter', 'lazy-img', 'web-photo-filter-context'] }
   ]
 };
 
