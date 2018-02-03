@@ -83,18 +83,21 @@ export class WebPhotoFilterComponent {
   private desaturateImage(image, feColorMatrix: number[]) {
     let canvas = document.createElement('canvas');
     image.parentNode.insertBefore(canvas, image);
-    canvas.width  = image.width;
+    canvas.width = image.width;
     canvas.height = image.height;
     image.parentNode.removeChild(image);
 
     let ctx;
     try {
-      ctx = canvas.getContext("webgl")  || canvas.getContext("experimental-webgl");
-    } catch(e) {}
+      ctx = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    } catch (e) {
+      // In case we couldn't instantiate WebGL, do nothing
+      return;
+    }
 
     if (!ctx) {
-      // You could fallback to 2D methods here
-      alert("Sorry, it seems WebGL is not available.");
+      // WebGL not supported. A fallback could be 2D methods, but that would not be performing
+      return;
     }
 
     let program = this.createWebGLProgram(ctx, this.vertexShaderSource, this.fragmentShaderSource);
@@ -110,10 +113,10 @@ export class WebPhotoFilterComponent {
     let cloneFeColorMatrix = feColorMatrix.slice();
 
     let feMultiplier = [];
-    feMultiplier.push(cloneFeColorMatrix.splice(3,1)[0]);
-    feMultiplier.push(cloneFeColorMatrix.splice(8,1)[0]);
-    feMultiplier.push(cloneFeColorMatrix.splice(12,1)[0]);
-    feMultiplier.push(cloneFeColorMatrix.splice(16,1)[0]);
+    feMultiplier.push(cloneFeColorMatrix.splice(3, 1)[0]);
+    feMultiplier.push(cloneFeColorMatrix.splice(8, 1)[0]);
+    feMultiplier.push(cloneFeColorMatrix.splice(12, 1)[0]);
+    feMultiplier.push(cloneFeColorMatrix.splice(16, 1)[0]);
 
     // Expose feColorMatrix to shader via u_matrix
     let matrixTransform = ctx.getUniformLocation(program, "u_matrix");
