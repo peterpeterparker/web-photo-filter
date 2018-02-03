@@ -61,6 +61,7 @@ declare global {
   namespace JSXElements {
     export interface WebPhotoFilterAttributes extends HTMLAttributes {
       alt?: string;
+      filter?: string;
       src?: string;
     }
   }
