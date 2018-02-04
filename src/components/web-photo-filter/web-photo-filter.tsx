@@ -1,5 +1,7 @@
 import {Component, Event, EventEmitter, Listen, Prop} from '@stencil/core';
+
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
+import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
 
 @Component({
   tag: 'web-photo-filter',
@@ -12,7 +14,7 @@ export class WebPhotoFilterComponent {
   @Prop() alt: string;
   @Prop() filter: string;
 
-  @Event() filterLoad: EventEmitter<any>;
+  @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
 
   private createWebGLProgram(ctx, vertexShaderSource, fragmentShaderSource) {
 
@@ -77,15 +79,15 @@ export class WebPhotoFilterComponent {
 
     if (matrix === null) {
       // We consider null as NO_FILTER, in that case the img will be emitted
-      this.emitFilterApplied(event.detail);
+      this.emitFilterApplied(event.detail, this.hasValidWegGLContext());
       return;
     }
 
     this.desaturateImage(event.detail, matrix);
   }
 
-  private emitFilterApplied(result: any) {
-    this.filterLoad.emit(result);
+  private emitFilterApplied(result: HTMLElement, webGlState: boolean) {
+    this.filterLoad.emit({webGLDetected: webGlState, result: result});
   }
 
   private desaturateImage(image: HTMLImageElement, feColorMatrix: number[]) {
@@ -100,13 +102,13 @@ export class WebPhotoFilterComponent {
       ctx = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
     } catch (e) {
       // In case we couldn't instantiate WebGL, do nothing
-      this.emitFilterApplied(image);
+      this.emitFilterApplied(image, false);
       return;
     }
 
     if (!ctx) {
       // WebGL not supported. A fallback could be 2D methods, but that would not be performing
-      this.emitFilterApplied(image);
+      this.emitFilterApplied(image, false);
       return;
     }
 
@@ -178,7 +180,20 @@ export class WebPhotoFilterComponent {
     ctx.drawArrays(ctx.TRIANGLES, 0, 6);
 
     // The filter was applied, we emit the canvas not the source image
-    this.emitFilterApplied(canvas);
+    this.emitFilterApplied(canvas, true);
+  }
+
+  private hasValidWegGLContext(): boolean {
+    let canvas: HTMLCanvasElement = document.createElement("canvas");
+
+    let ctx;
+    try {
+      ctx = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    } catch (e) {
+      return false;
+    }
+
+    return ctx && ctx instanceof WebGLRenderingContext;
   }
 
   render() {

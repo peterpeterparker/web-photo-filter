@@ -37,36 +37,6 @@ declare global {
 
 
 import {
-  WebPhotoFilterContextComponent as WebPhotoFilterContext
-} from './components/web-photo-filter-context/web-photo-filter-context';
-
-declare global {
-  interface HTMLWebPhotoFilterContextElement extends WebPhotoFilterContext, HTMLElement {
-  }
-  var HTMLWebPhotoFilterContextElement: {
-    prototype: HTMLWebPhotoFilterContextElement;
-    new (): HTMLWebPhotoFilterContextElement;
-  };
-  interface HTMLElementTagNameMap {
-    "web-photo-filter-context": HTMLWebPhotoFilterContextElement;
-  }
-  interface ElementTagNameMap {
-    "web-photo-filter-context": HTMLWebPhotoFilterContextElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "web-photo-filter-context": JSXElements.WebPhotoFilterContextAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface WebPhotoFilterContextAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   WebPhotoFilterComponent as WebPhotoFilter
 } from './components/web-photo-filter/web-photo-filter';
 
