@@ -1,4 +1,4 @@
-import {Component, Listen, Prop} from '@stencil/core';
+import {Component, Event, EventEmitter, Listen, Prop} from '@stencil/core';
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
 
 @Component({
@@ -11,6 +11,8 @@ export class WebPhotoFilterComponent {
   @Prop() src: string;
   @Prop() alt: string;
   @Prop() filter: string;
+
+  @Event() filterLoad: EventEmitter<any>;
 
   private createWebGLProgram(ctx, vertexShaderSource, fragmentShaderSource) {
 
@@ -74,13 +76,19 @@ export class WebPhotoFilterComponent {
     let matrix: number[] = WebPhotoFilterType.getFilter(this.filter);
 
     if (matrix === null) {
+      // We consider null as NO_FILTER, in that case the img will be emitted
+      this.emitFilterApplied(event.detail);
       return;
     }
 
     this.desaturateImage(event.detail, matrix);
   }
 
-  private desaturateImage(image, feColorMatrix: number[]) {
+  private emitFilterApplied(result: any) {
+    this.filterLoad.emit(result);
+  }
+
+  private desaturateImage(image: HTMLImageElement, feColorMatrix: number[]) {
     let canvas = document.createElement('canvas');
     image.parentNode.insertBefore(canvas, image);
     canvas.width = image.width;
@@ -92,11 +100,13 @@ export class WebPhotoFilterComponent {
       ctx = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
     } catch (e) {
       // In case we couldn't instantiate WebGL, do nothing
+      this.emitFilterApplied(image);
       return;
     }
 
     if (!ctx) {
       // WebGL not supported. A fallback could be 2D methods, but that would not be performing
+      this.emitFilterApplied(image);
       return;
     }
 
@@ -166,6 +176,9 @@ export class WebPhotoFilterComponent {
 
     // Draw the rectangle.
     ctx.drawArrays(ctx.TRIANGLES, 0, 6);
+
+    // The filter was applied, we emit the canvas not the source image
+    this.emitFilterApplied(canvas);
   }
 
   render() {

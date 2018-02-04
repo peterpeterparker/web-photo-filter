@@ -2,12 +2,6 @@ export class WebPhotoFilterType {
 
   static getFilters():any {
     return {
-      NO_FILTER: [
-        1, 0, 0, 0, 0,
-        0, 1, 0, 0, 0,
-        0, 0, 1, 0, 0,
-        0, 0, 0, 1, 0
-      ],
       SEPIA: [
         1.351, 0, 0, 0, 0,
         1.203, 0, 0, 0, 0,
