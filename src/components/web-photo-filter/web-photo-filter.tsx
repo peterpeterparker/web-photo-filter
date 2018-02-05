@@ -1,20 +1,27 @@
-import {Component, Event, EventEmitter, Listen, Prop} from '@stencil/core';
+import {Component, Element, Event, EventEmitter, Prop} from '@stencil/core';
 
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
 import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
 
 @Component({
   tag: 'web-photo-filter',
-  styleUrl: 'web-photo-filter.scss',
-  shadow: true
+  styleUrl: 'web-photo-filter.scss'
 })
 export class WebPhotoFilterComponent {
+
+  srcImgId: string;
 
   @Prop() src: string;
   @Prop() alt: string;
   @Prop() filter: string;
 
   @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
+
+  @Element() el: HTMLElement;
+
+  componentWillLoad() {
+    this.srcImgId = 'webPhotoFilter' + Date.now();
+  }
 
   private createWebGLProgram(ctx, vertexShaderSource, fragmentShaderSource) {
 
@@ -72,18 +79,26 @@ export class WebPhotoFilterComponent {
     }
   `;
 
-  @Listen('lazyImgloaded')
-  applyFilter(event: CustomEvent) {
+  componentWillUpdate() {
+    this.applyFilter();
+  }
+
+  private applyFilter() {
+    const image: HTMLImageElement = this.el.querySelector('img#' + this.srcImgId);
+
+    if (image == null) {
+      return;
+    }
 
     let matrix: number[] = WebPhotoFilterType.getFilter(this.filter);
 
     if (matrix === null) {
       // We consider null as NO_FILTER, in that case the img will be emitted
-      this.emitFilterApplied(event.detail, this.hasValidWegGLContext());
+      this.emitFilterApplied(image, this.hasValidWegGLContext());
       return;
     }
 
-    this.desaturateImage(event.detail, matrix);
+    this.desaturateImage(image, matrix);
   }
 
   private emitFilterApplied(result: HTMLElement, webGlState: boolean) {
@@ -91,11 +106,20 @@ export class WebPhotoFilterComponent {
   }
 
   private desaturateImage(image: HTMLImageElement, feColorMatrix: number[]) {
-    let canvas = document.createElement('canvas');
+    let canvas = this.el.querySelector('canvas');
+
+    if (canvas != null) {
+      canvas.parentNode.removeChild(canvas);
+    }
+
+    canvas = document.createElement('canvas');
+
     image.parentNode.insertBefore(canvas, image);
+
     canvas.width = image.width;
     canvas.height = image.height;
-    image.parentNode.removeChild(image);
+
+    image.style.display = 'none';
 
     let ctx;
     try {
@@ -198,7 +222,7 @@ export class WebPhotoFilterComponent {
 
   render() {
     return (
-      <lazy-img src={this.src} alt={this.alt}></lazy-img>
+      <img id={this.srcImgId} src={this.src} alt={this.alt} onLoad={() => this.applyFilter()}></img>
     );
   }
 }
