@@ -94,6 +94,8 @@ export class WebPhotoFilterComponent {
 
     if (matrix === null) {
       // We consider null as NO_FILTER, in that case the img will be emitted
+      // Furthermore, we explicity displays it
+      image.style.display = 'block';
       this.emitFilterApplied(image, this.hasValidWegGLContext());
       return;
     }
@@ -118,8 +120,6 @@ export class WebPhotoFilterComponent {
 
     canvas.width = image.width;
     canvas.height = image.height;
-
-    image.style.display = 'none';
 
     let ctx;
     try {
