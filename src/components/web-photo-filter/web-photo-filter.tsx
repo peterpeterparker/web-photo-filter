@@ -90,6 +90,8 @@ export class WebPhotoFilterComponent {
       return;
     }
 
+    this.removePreviousCanvas();
+
     let matrix: number[] = WebPhotoFilterType.getFilter(this.filter);
 
     if (matrix === null) {
@@ -107,17 +109,17 @@ export class WebPhotoFilterComponent {
     this.filterLoad.emit({webGLDetected: webGlState, result: result});
   }
 
-  private desaturateImage(image: HTMLImageElement, feColorMatrix: number[]) {
-    let canvas = this.el.querySelector('canvas');
+  private removePreviousCanvas() {
+    let canvas: HTMLCanvasElement = this.el.querySelector('canvas');
 
     if (canvas != null) {
       canvas.parentNode.removeChild(canvas);
     }
+  }
 
-    canvas = document.createElement('canvas');
-
+  private desaturateImage(image: HTMLImageElement, feColorMatrix: number[]) {
+    let canvas: HTMLCanvasElement = document.createElement('canvas');
     image.parentNode.insertBefore(canvas, image);
-
     canvas.width = image.width;
     canvas.height = image.height;
 
