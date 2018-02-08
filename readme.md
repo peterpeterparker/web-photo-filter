@@ -26,7 +26,7 @@ Furthermore, in order to not produce error, in case WebGL would not be supported
 
 This project is a Web Component build with the amazing [Stencil](https://stenciljs.com) compiler.
 
-The project framework and structure follows the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter)
+The project framework and structure follows the [stencil-component-starter](https://github.com/ionic-team/stencil-component-starter)
 
 ## Installation
 
