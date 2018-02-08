@@ -1,6 +1,6 @@
 {
   "name": "web-photo-filter",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A Web Component to apply Instagram-like WebGL filters to photos",
   "main": "dist/webphotofilter.js",
   "types": "dist/types/index.d.ts",
@@ -28,14 +28,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ionic-team/stencil-component-starter.git"
+    "url": "git+https://github.com/peterpeterparker/web-photo-filter.git"
   },
   "author": "Ionic Team",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ionic-team/stencil"
+    "url": "https://github.com/peterpeterparker/web-photo-filter"
   },
-  "homepage": "https://github.com/ionic-team/stencil",
+  "homepage": "https://github.com/peterpeterparker/web-photo-filter",
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
