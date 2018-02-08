@@ -15,6 +15,8 @@ export class WebPhotoFilterComponent {
   @Prop() alt: string;
   @Prop() filter: string;
 
+  @Prop() keep: boolean = false;
+
   @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
 
   @Element() el: HTMLElement;
@@ -122,6 +124,11 @@ export class WebPhotoFilterComponent {
     image.parentNode.insertBefore(canvas, image);
     canvas.width = image.width;
     canvas.height = image.height;
+
+    if (!this.keep) {
+      // There might be also cases where it's handy to keep a non displayed version of the image in the dom
+      image.parentNode.removeChild(image);
+    }
 
     let ctx;
     try {

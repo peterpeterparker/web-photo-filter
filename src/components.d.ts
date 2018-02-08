@@ -31,6 +31,7 @@ declare global {
     export interface WebPhotoFilterAttributes extends HTMLAttributes {
       alt?: string;
       filter?: string;
+      keep?: boolean;
       src?: string;
     }
   }
