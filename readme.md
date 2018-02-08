@@ -12,21 +12,21 @@ Other web based solutions to filter and modify pictures like CSS (for example [I
 
 A CSS solution would not modify the image itself but "only" applies a layer on it.
 
-Most Javascript based algorithm are not enough performing to be used on mobile device (= the processing should be as fast as possible, almost instantaneous as Instagram itself is) 
+Most Javascript based algorithm are not enough performing to be used on mobile device (= the processing should be as fast as possible, almost instantaneous as Instagram is). 
 
 ### Supported by major browsers and devices
 
-This component, at least for the moment, February 2018, will use [WebGL](https://caniuse.com/#feat=webgl) because at this time this technology is well supported
+This component, at least for the moment, February 2018, will use [WebGL](https://caniuse.com/#feat=webgl) because at this time this technology is well supported across browser and devices.
 
 [WebGL 2](https://caniuse.com/#search=webgl%202) might be use later on, but this technology isn't enough well supported right now.
 
 Furthermore, in order to not produce error, in case WebGL would not be supported, the component will simply display the original image. 
 
-* Lightweight, fast boot time, lazy loading, support across the most popular frontend frameworks
+### Lightweight, fast boot time, lazy loading, support across the most popular frontend frameworks
 
-This project is a Web Component build with the amazing [Stencil](https://stenciljs.com) compiler
+This project is a Web Component build with the amazing [Stencil](https://stenciljs.com) compiler.
 
-The project framework and structure follows the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter) 
+The project framework and structure follows the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter)
 
 ## Installation
 
@@ -34,7 +34,7 @@ The project framework and structure follows the [stencil-app-starter](https://gi
 
 ### Installation in a Ionic project
 
-After having installed the library, proceed with following steps
+After having installed the library, proceed with following steps:
 
 1. In the module you would like to use the component, import and add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas
 
@@ -97,11 +97,13 @@ or
      
      <web-photo-filter src="assets/img/test.jpg"></web-photo-filter>
 
-### Event
+### Events
 
-If you would like to start or process the result after the component did finished is processing, an event will be triggered containing the resulting image (no filter) or canvas. 
+If you would like to start or process the result after the component did finished is processing, an event will be triggered containing the resulting image (no filter) or canvas and an indication telling you if WebGL is supported or not. 
 
     <web-photo-filter (filterLoad)="imageLoaded($event)" src="{{imgURI}}" filter="{{filter}}"></web-photo-filter>
+    
+The description of the event is available in the interface `src/types/web-photo-filter-result.tsx`
 
 ### Keep
 
