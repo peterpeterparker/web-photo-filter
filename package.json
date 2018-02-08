@@ -30,7 +30,7 @@
     "type": "git",
     "url": "git+https://github.com/peterpeterparker/web-photo-filter.git"
   },
-  "author": "Ionic Team",
+  "author": "David Dal Busco",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/peterpeterparker/web-photo-filter"
