@@ -1,78 +1,121 @@
-![Built With Stencil](https://img.shields.io/badge/-Built%20With%20Stencil-16161d.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI%2BCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BCgkuc3Qwe2ZpbGw6I0ZGRkZGRjt9Cjwvc3R5bGU%2BCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MjQuNywzNzMuOWMwLDM3LjYtNTUuMSw2OC42LTkyLjcsNjguNkgxODAuNGMtMzcuOSwwLTkyLjctMzAuNy05Mi43LTY4LjZ2LTMuNmgzMzYuOVYzNzMuOXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTQyNC43LDI5Mi4xSDE4MC40Yy0zNy42LDAtOTIuNy0zMS05Mi43LTY4LjZ2LTMuNkgzMzJjMzcuNiwwLDkyLjcsMzEsOTIuNyw2OC42VjI5Mi4xeiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDI0LjcsMTQxLjdIODcuN3YtMy42YzAtMzcuNiw1NC44LTY4LjYsOTIuNy02OC42SDMzMmMzNy45LDAsOTIuNywzMC43LDkyLjcsNjguNlYxNDEuN3oiLz4KPC9zdmc%2BCg%3D%3D&colorA=16161d&style=flat-square)
+# Web Photo Filter
 
-# Stencil Component Starter
+Web Photo Filter is a Web Component to apply Instagram-like WebGL filters to photos
 
-This is a starter project for building a standalone Web Component using Stencil.
+## Goals
 
-Stencil is also great for building entire apps. For that, use the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter) instead.
+The main goal of this component is to be implemented in the mobile application [Fluster](https://fluster.io) to let users, while posting their rooms to let and flats, enhance the photos of their offers in order to make them more attractive. 
 
-# Stencil
+### Image modification and fast processing
 
-Stencil is a compiler for building fast web apps using Web Components.
+Other web based solutions to filter and modify pictures like CSS (for example [Instagram.css](https://picturepan2.github.io/instagram.css/)) or Javascript were discarded to fulfill the above goal.
 
-Stencil combines the best concepts of the most popular frontend frameworks into a compile-time rather than run-time tool.  Stencil takes TypeScript, JSX, a tiny virtual DOM layer, efficient one-way data binding, an asynchronous rendering pipeline (similar to React Fiber), and lazy-loading out of the box, and generates 100% standards-based Web Components that run in any browser supporting the Custom Elements v1 spec.
+A CSS solution would not modify the image itself but "only" applies a layer on it.
 
-Stencil components are just Web Components, so they work in any major framework or with no framework at all.
+Most Javascript based algorithm are not enough performing to be used on mobile device (= the processing should be as fast as possible, almost instantaneous as Instagram is). 
+
+### Supported by major browsers and devices
+
+This component, at least for the moment, February 2018, will use [WebGL](https://caniuse.com/#feat=webgl) because at this time this technology is well supported across browser and devices.
+
+[WebGL 2](https://caniuse.com/#search=webgl%202) might be use later on, but this technology isn't enough well supported right now.
+
+Furthermore, in order to not produce error, in case WebGL would not be supported, the component will simply display the original image. 
+
+### Lightweight, fast boot time, lazy loading, support across the most popular frontend frameworks
+
+This project is a Web Component build with the amazing [Stencil](https://stenciljs.com) compiler.
+
+The project framework and structure follows the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter)
+
+## Installation
+
+    $ npm install web-photo-filter
+
+### Installation in a Ionic project
+
+After having installed the library, proceed with following steps:
+
+1. In the module you would like to use the component, import and add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas
+
+        @NgModule({
+            declarations: [
+                MyPage
+            ],
+            imports: [
+                IonicPageModule.forChild(MyPage)
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        })
+        export class MyPageModule {
+        }
+        
+2. In `app.modules` (the main module of your app), import the component. As far as I understood, Web Component built with Stencil inherit Lazy Loading, therefore, no worries about effect on your boot time
+
+         import 'web-photo-filter/webphotofilter';
+         
+3. At this time, the Web Component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, overwrite `copy.config.js` from [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js) and modify the `copySwToolbox` like following
+
+       copySwToolbox: {
+           src: ['{{ROOT}}/node_modules/sw-toolbox/sw-toolbox.js', '{{ROOT}}/node_modules/web-photo-filter/webphotofilter**/*'],
+           dest: '{{BUILD}}'
+       }
+
+Don't forget to also update your `package.json` in order to use your local modified `copy.config.js` file
+
+        "config": {
+            "ionic_copy": "./scripts/copy.config.js"
+          }
 
 ## Getting Started
 
-To start building a new web component using Stencil, clone this repo to a new directory:
+The Web Photo Filter Component could be use like following:
 
-```bash
-git clone https://github.com/ionic-team/stencil-component-starter.git my-component
-cd my-component
-git remote rm origin
-```
+    <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
+    
+The only mandatory parameter is `src` respectively the source of the image. Right now, the component doesn't support Cors image (like https://url.com/myimage.jpg).
 
-and run:
+### Filter
 
-```bash
-npm install
-npm start
-```
+Filter is optional. Omitting this attribute or specifying a null value will result in no processing, the source image gonna be displayed.
 
-To watch for file changes during develop, run:
+The list of available filters (TODO: showcase) are available in class `src/types/web-photo-filter-type.tsx`  
 
-```bash
-npm run dev
-```
+#### Example: Sepia
 
-To build the component for production, run:
+     <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
+     
+Angular example:
 
-```bash
-npm run build
-```
+     <web-photo-filter src="{{imgURI}}" filter="{{filter}}"></web-photo-filter>     
+     
+#### Example: No Filter     
 
-To run the unit tests for the components, run:
+     <web-photo-filter src="assets/img/test.jpg" filter="null"></web-photo-filter>
+     
+or
+     
+     <web-photo-filter src="assets/img/test.jpg"></web-photo-filter>
 
-```bash
-npm test
-```
+### Events
 
-Need help? Check out our docs [here](https://stenciljs.com/docs/my-first-component).
+If you would like to start or process the result after the component did finished is processing, an event will be triggered containing the resulting image (no filter) or canvas and an indication telling you if WebGL is supported or not. 
 
+    <web-photo-filter (filterLoad)="imageLoaded($event)" src="{{imgURI}}" filter="{{filter}}"></web-photo-filter>
+    
+The description of the event is available in the interface `src/types/web-photo-filter-result.tsx`
 
-## Naming Components
+### Keep
 
-When creating new component tags, we recommend _not_ using `stencil` in the component name (ex: `<stencil-datepicker>`). This is because the generated component has little to nothing to do with Stencil; it's just a web component!
+Sometimes it's handy to keep the source image not displayed in the DOM (for example if you post process the image or the canvas with [cropperjs](https://github.com/fengyuanchen/cropperjs)). To do so, use the optional attribute `keep`
 
-Instead, use a prefix that fits your company or any name for a group of related components. For example, all of the Ionic generated web components use the prefix `ion`.
+    <web-photo-filter src="assets/img/test.jpg" filter="sepia" keep="true"></web-photo-filter>
+    
+## Credits
 
+This Web Component would not had been possible without the brilliant [article](https://www.madebymike.com.au/writing/canvas-image-manipulation/) and WebGL core processing code written by [Mike Riethmuller](https://github.com/MadeByMike) :heart:
 
-## Using this component
+## License
 
-### Script tag
+MIT © [David Dal Busco](mailto:david.dalbusco@outlook.com)
 
-- [Publish to NPM](https://docs.npmjs.com/getting-started/publishing-npm-packages)
-- Put a script tag similar to this `<script src='https://unpkg.com/my-component@0.0.1/dist/mycomponent.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
-
-### Node Modules
-- Run `npm install my-component --save`
-- Put a script tag similar to this `<script src='node_modules/my-component/dist/mycomponent.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
-
-### In a stencil-starter app
-- Run `npm install my-component --save`
-- Add `{ name: 'my-component' }` to your [collections](https://github.com/ionic-team/stencil-starter/blob/master/stencil.config.js#L5)
-- Then you can use the element anywhere in your template, JSX, html etc
