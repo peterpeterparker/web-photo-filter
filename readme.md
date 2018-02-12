@@ -52,7 +52,7 @@ After having installed the library, proceed with following steps:
         
 2. In `app.modules` (the main module of your app), import the component. As far as I understood, Web Component built with Stencil inherit Lazy Loading, therefore, no worries about effect on your boot time
 
-         import 'web-photo-filter/dist/webphotofilter';
+         import 'web-photo-filter';
          
 3. At this time, the Web Component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, overwrite `copy.config.js` from [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js) and add the following `copyWebPhotoFilter` block
 
