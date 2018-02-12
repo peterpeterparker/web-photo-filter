@@ -132,7 +132,7 @@ export class WebPhotoFilterComponent {
 
     let ctx;
     try {
-      ctx = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      ctx = canvas.getContext('webgl');
     } catch (e) {
       // In case we couldn't instantiate WebGL, do nothing
       this.emitFilterApplied(image, false);
@@ -148,7 +148,7 @@ export class WebPhotoFilterComponent {
     let program = this.createWebGLProgram(ctx, this.vertexShaderSource, this.fragmentShaderSource);
 
     // Expose canvas width and height to shader via u_resolution
-    let resolutionLocation = ctx.getUniformLocation(program, "u_resolution");
+    let resolutionLocation = ctx.getUniformLocation(program, 'u_resolution');
     ctx.uniform2f(resolutionLocation, canvas.width, canvas.height);
 
     // Modify the feColorMatrix to fit better with available shader datatypes by putting the multiplier in a separate vector
@@ -164,14 +164,14 @@ export class WebPhotoFilterComponent {
     feMultiplier.push(cloneFeColorMatrix.splice(16, 1)[0]);
 
     // Expose feColorMatrix to shader via u_matrix
-    let matrixTransform = ctx.getUniformLocation(program, "u_matrix");
+    let matrixTransform = ctx.getUniformLocation(program, 'u_matrix');
     ctx.uniformMatrix4fv(matrixTransform, false, new Float32Array(cloneFeColorMatrix));
 
-    let multiplier = ctx.getUniformLocation(program, "u_multiplier");
+    let multiplier = ctx.getUniformLocation(program, 'u_multiplier');
     ctx.uniform4f(multiplier, feMultiplier[0], feMultiplier[1], feMultiplier[2], feMultiplier[3]);
 
     // Position rectangle vertices (2 triangles)
-    let positionLocation = ctx.getAttribLocation(program, "a_position");
+    let positionLocation = ctx.getAttribLocation(program, 'a_position');
     let buffer = ctx.createBuffer();
     ctx.bindBuffer(ctx.ARRAY_BUFFER, buffer);
     ctx.bufferData(ctx.ARRAY_BUFFER, new Float32Array([
@@ -185,7 +185,7 @@ export class WebPhotoFilterComponent {
     ctx.vertexAttribPointer(positionLocation, 2, ctx.FLOAT, false, 0, 0);
 
     //Position texture
-    let texCoordLocation = ctx.getAttribLocation(program, "a_texCoord");
+    let texCoordLocation = ctx.getAttribLocation(program, 'a_texCoord');
     let texCoordBuffer = ctx.createBuffer();
     ctx.bindBuffer(ctx.ARRAY_BUFFER, texCoordBuffer);
     ctx.bufferData(ctx.ARRAY_BUFFER, new Float32Array([
@@ -217,11 +217,11 @@ export class WebPhotoFilterComponent {
   }
 
   private hasValidWegGLContext(): boolean {
-    let canvas: HTMLCanvasElement = document.createElement("canvas");
+    let canvas: HTMLCanvasElement = document.createElement('canvas');
 
-    let ctx;
+    let ctx: WebGLRenderingContext;
     try {
-      ctx = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      ctx = canvas.getContext('webgl');
     } catch (e) {
       return false;
     }

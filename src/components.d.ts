@@ -5,12 +5,21 @@
  */
 
 
+declare global {
+  interface HTMLStencilElement extends HTMLElement {
+    componentOnReady(): Promise<this>;
+    componentOnReady(done: (ele?: this) => void): void;
+  }
+}
+
+
+
 import {
   WebPhotoFilterComponent as WebPhotoFilter
 } from './components/web-photo-filter/web-photo-filter';
 
 declare global {
-  interface HTMLWebPhotoFilterElement extends WebPhotoFilter, HTMLElement {
+  interface HTMLWebPhotoFilterElement extends WebPhotoFilter, HTMLStencilElement {
   }
   var HTMLWebPhotoFilterElement: {
     prototype: HTMLWebPhotoFilterElement;

@@ -54,10 +54,10 @@ After having installed the library, proceed with following steps:
 
          import 'web-photo-filter/dist/webphotofilter';
          
-3. At this time, the Web Component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, overwrite `copy.config.js` from [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js) and modify the `copySwToolbox` like following
+3. At this time, the Web Component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, overwrite `copy.config.js` from [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js) and add the following `copyWebPhotoFilter` block
 
-       copySwToolbox: {
-           src: ['{{ROOT}}/node_modules/sw-toolbox/sw-toolbox.js', '{{ROOT}}/node_modules/web-photo-filter/dist/webphotofilter**/*'],
+       copyWebPhotoFilter: {
+           src: ['{{ROOT}}/node_modules/web-photo-filter/dist/webphotofilter**/*'],
            dest: '{{BUILD}}'
        }
 
@@ -114,6 +114,8 @@ Sometimes it's handy to keep the source image not displayed in the DOM (for exam
 ## Credits
 
 This Web Component would not had been possible without the brilliant [article](https://www.madebymike.com.au/writing/canvas-image-manipulation/) and WebGL core processing code written by [Mike Riethmuller](https://github.com/MadeByMike) :heart:
+
+The sources of nine filters (Brownie, Brightnes, etc.) were adapted from the project [WebGLImageFilter](https://github.com/phoboslab/WebGLImageFilter) by [Dominic Szablewski](http://phoboslab.org/) :+1:
 
 ## License
 
