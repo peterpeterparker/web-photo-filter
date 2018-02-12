@@ -1,7 +1,18 @@
 {
   "name": "web-photo-filter",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Web Component to apply Instagram-like WebGL filters to photos",
+  "keywords": [
+    "photo",
+    "image",
+    "canvas",
+    "instagram",
+    "filter",
+    "effect",
+    "webgl",
+    "web component",
+    "stencil"
+  ],
   "main": "dist/webphotofilter.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
