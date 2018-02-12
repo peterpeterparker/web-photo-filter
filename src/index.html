@@ -7,10 +7,48 @@
 
   <script src="/build/webphotofilter.js"></script>
 
+
+  <style>
+    web-photo-filter img, web-photo-filter canvas {
+      width: 200px;
+      max-width: 200px;
+    }
+  </style>
 </head>
 <body>
 
-  <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
+  <h1>Showcase</h1>
+
+  <div style="display: flex; flex-wrap: wrap;">
+    <web-photo-filter src="assets/img/test.jpg"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="violen_tomato"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="greyscale"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="brightness"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="contrast"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="hue"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="brownie"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="vintage"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="koda"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="technicolor"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="polaroid"></web-photo-filter>
+
+    <web-photo-filter src="assets/img/test.jpg" filter="bgr"></web-photo-filter>
+  </div>
+
+
+
 
 </body>
 </html>

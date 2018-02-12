@@ -115,6 +115,8 @@ Sometimes it's handy to keep the source image not displayed in the DOM (for exam
 
 This Web Component would not had been possible without the brilliant [article](https://www.madebymike.com.au/writing/canvas-image-manipulation/) and WebGL core processing code written by [Mike Riethmuller](https://github.com/MadeByMike) :heart:
 
+The sources of nine filters (Brownie, Brightnes, etc.) were adapted from the project [WebGLImageFilter](https://github.com/phoboslab/WebGLImageFilter) by [Dominic Szablewski](http://phoboslab.org/) :+1:
+
 ## License
 
 MIT © [David Dal Busco](mailto:david.dalbusco@outlook.com)
