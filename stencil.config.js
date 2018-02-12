@@ -1,9 +1,6 @@
 exports.config = {
   namespace: 'webphotofilter',
-  generateDistribution: true,
-  bundles: [
-    { components: ['web-photo-filter'] }
-  ]
+  generateDistribution: true
 };
 
 exports.devServer = {
