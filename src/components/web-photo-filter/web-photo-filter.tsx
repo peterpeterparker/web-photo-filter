@@ -10,6 +10,7 @@ import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filte
 export class WebPhotoFilterComponent {
 
   srcImgId: string;
+  private canvasId: string;
 
   @Prop() src: string;
   @Prop() alt: string;
@@ -22,7 +23,8 @@ export class WebPhotoFilterComponent {
   @Element() el: HTMLElement;
 
   componentWillLoad() {
-    this.srcImgId = 'webPhotoFilter' + Date.now();
+    this.srcImgId = 'webPhotoFilterImg' + Date.now();
+    this.canvasId = 'webPhotoFilterCanvas' + Date.now();
   }
 
   private createWebGLProgram(ctx, vertexShaderSource, fragmentShaderSource) {
@@ -92,14 +94,12 @@ export class WebPhotoFilterComponent {
       return;
     }
 
-    this.removePreviousCanvas();
-
     let matrix: number[] = WebPhotoFilterType.getFilter(this.filter);
 
     if (matrix === null) {
       // We consider null as NO_FILTER, in that case the img will be emitted
       // Furthermore, we explicity displays it
-      image.style.display = 'block';
+      image.classList.add('display-no-filter');
       this.emitFilterApplied(image, this.hasValidWegGLContext());
       return;
     }
@@ -111,26 +111,31 @@ export class WebPhotoFilterComponent {
     this.filterLoad.emit({webGLDetected: webGlState, result: result});
   }
 
-  private removePreviousCanvas() {
-    let canvas: HTMLCanvasElement = this.el.querySelector('canvas');
+  private createCanvas(image: HTMLImageElement): HTMLCanvasElement {
+    let canvas: HTMLCanvasElement = document.createElement('canvas');
 
-    if (canvas != null) {
-      canvas.parentNode.removeChild(canvas);
-    }
+    canvas.id = this.canvasId;
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+
+    image.parentNode.insertBefore(canvas, image);
+
+    return canvas;
   }
 
   private desaturateImage(image: HTMLImageElement, feColorMatrix: number[]) {
-    let canvas: HTMLCanvasElement = document.createElement('canvas');
-    image.parentNode.insertBefore(canvas, image);
-    canvas.width = image.width;
-    canvas.height = image.height;
+    let canvas: HTMLCanvasElement = this.el.querySelector('canvas#' + this.canvasId);
+
+    if (!canvas) {
+      canvas = this.createCanvas(image);
+    }
 
     if (!this.keep) {
       // There might be also cases where it's handy to keep a non displayed version of the image in the dom
       image.parentNode.removeChild(image);
     }
 
-    let ctx;
+    let ctx: WebGLRenderingContext;
     try {
       ctx = canvas.getContext('webgl');
     } catch (e) {
@@ -173,44 +178,44 @@ export class WebPhotoFilterComponent {
     // Position rectangle vertices (2 triangles)
     let positionLocation = ctx.getAttribLocation(program, 'a_position');
     let buffer = ctx.createBuffer();
-    ctx.bindBuffer(ctx.ARRAY_BUFFER, buffer);
-    ctx.bufferData(ctx.ARRAY_BUFFER, new Float32Array([
+    ctx.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, buffer);
+    ctx.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array([
       0, 0,
-      image.width, 0,
-      0, image.height,
-      0, image.height,
-      image.width, 0,
-      image.width, image.height]), ctx.STATIC_DRAW);
+      image.naturalWidth, 0,
+      0, image.naturalHeight,
+      0, image.naturalHeight,
+      image.naturalWidth, 0,
+      image.naturalWidth, image.naturalHeight]), WebGLRenderingContext.STATIC_DRAW);
     ctx.enableVertexAttribArray(positionLocation);
-    ctx.vertexAttribPointer(positionLocation, 2, ctx.FLOAT, false, 0, 0);
+    ctx.vertexAttribPointer(positionLocation, 2, WebGLRenderingContext.FLOAT, false, 0, 0);
 
     //Position texture
     let texCoordLocation = ctx.getAttribLocation(program, 'a_texCoord');
     let texCoordBuffer = ctx.createBuffer();
-    ctx.bindBuffer(ctx.ARRAY_BUFFER, texCoordBuffer);
-    ctx.bufferData(ctx.ARRAY_BUFFER, new Float32Array([
+    ctx.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, texCoordBuffer);
+    ctx.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array([
       0.0, 0.0,
       1.0, 0.0,
       0.0, 1.0,
       0.0, 1.0,
       1.0, 0.0,
-      1.0, 1.0]), ctx.STATIC_DRAW);
+      1.0, 1.0]), WebGLRenderingContext.STATIC_DRAW);
     ctx.enableVertexAttribArray(texCoordLocation);
-    ctx.vertexAttribPointer(texCoordLocation, 2, ctx.FLOAT, false, 0, 0);
+    ctx.vertexAttribPointer(texCoordLocation, 2, WebGLRenderingContext.FLOAT, false, 0, 0);
 
     // Create a texture.
     let texture = ctx.createTexture();
-    ctx.bindTexture(ctx.TEXTURE_2D, texture);
+    ctx.bindTexture(WebGLRenderingContext.TEXTURE_2D, texture);
     // Set the parameters so we can render any size image.
-    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_WRAP_S, ctx.CLAMP_TO_EDGE);
-    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
-    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
-    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MAG_FILTER, ctx.NEAREST);
+    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_S, WebGLRenderingContext.CLAMP_TO_EDGE);
+    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_T, WebGLRenderingContext.CLAMP_TO_EDGE);
+    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MIN_FILTER, WebGLRenderingContext.NEAREST);
+    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MAG_FILTER, WebGLRenderingContext.NEAREST);
     // Load the image into the texture.
-    ctx.texImage2D(ctx.TEXTURE_2D, 0, ctx.RGBA, ctx.RGBA, ctx.UNSIGNED_BYTE, image);
+    ctx.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, image);
 
     // Draw the rectangle.
-    ctx.drawArrays(ctx.TRIANGLES, 0, 6);
+    ctx.drawArrays(WebGLRenderingContext.TRIANGLES, 0, 6);
 
     // The filter was applied, we emit the canvas not the source image
     this.emitFilterApplied(canvas, true);
