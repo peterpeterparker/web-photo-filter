@@ -1,5 +1,9 @@
 web-photo-filter {
   img {
     display: none;
+
+    &.display-no-filter {
+      display: block;
+    }
   }
 }

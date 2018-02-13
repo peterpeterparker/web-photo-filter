@@ -99,7 +99,7 @@ export class WebPhotoFilterComponent {
     if (matrix === null) {
       // We consider null as NO_FILTER, in that case the img will be emitted
       // Furthermore, we explicity displays it
-      image.style.display = 'block';
+      image.classList.add('display-no-filter');
       this.emitFilterApplied(image, this.hasValidWegGLContext());
       return;
     }
