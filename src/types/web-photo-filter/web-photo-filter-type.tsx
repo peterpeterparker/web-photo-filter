@@ -30,7 +30,7 @@ export class WebPhotoFilterType {
       SATURATION: WebPhotoFilterType.saturationMatrix(level ? level : 1.5),
       CONTRAST: WebPhotoFilterType.contrastMatrix(level ? level : 1.5),
       HUE: WebPhotoFilterType.hueMatrix(level ? level : 90),
-      BROWNIE: [
+      COOKIE: [
         0.5997023582458496,0.3455324172973633,-0.27082985639572144,0,0.186007559299469,
         -0.0377032496035099,0.8609577417373657,0.1505955308675766,0,-0.14497417211532593,
         0.2411363571882248,-0.07441037893295288,0.4497218132019043,0,-0.029655195772647858,
