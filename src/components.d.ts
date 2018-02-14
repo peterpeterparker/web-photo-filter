@@ -41,6 +41,7 @@ declare global {
       alt?: string;
       filter?: string;
       keep?: boolean;
+      level?: number;
       src?: string;
     }
   }

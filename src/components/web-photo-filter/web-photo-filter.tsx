@@ -14,7 +14,9 @@ export class WebPhotoFilterComponent {
 
   @Prop() src: string;
   @Prop() alt: string;
+
   @Prop() filter: string;
+  @Prop() level: number;
 
   @Prop() keep: boolean = false;
 
@@ -94,7 +96,7 @@ export class WebPhotoFilterComponent {
       return;
     }
 
-    let matrix: number[] = WebPhotoFilterType.getFilter(this.filter);
+    let matrix: number[] = WebPhotoFilterType.getFilter(this.filter, this.level);
 
     if (matrix === null) {
       // We consider null as NO_FILTER, in that case the img will be emitted

@@ -9,48 +9,118 @@
 
 
   <style>
+    body {
+      font-family: monospace;
+    }
+
     web-photo-filter img, web-photo-filter canvas {
       width: 200px;
       max-width: 200px;
+    }
+
+    h1, h2, p, footer {
+      text-align: center;
+    }
+
+    footer img {
+      width: 2rem;
+      vertical-align: middle;
+    }
+
+    footer a {
+      text-decoration: none;
+    }
+
+    footer {
+      margin-top: 16px;
     }
   </style>
 </head>
 <body>
 
-  <h1>Showcase</h1>
+  <h1>Web Photo Filter</h1>
+  <h2>Showcase</h2>
 
   <div style="display: flex; flex-wrap: wrap;">
-    <web-photo-filter src="assets/img/test.jpg"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg"></web-photo-filter>
+      <p>No filter</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
+      <p>Sepia</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="blue_monotone"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="blue_monotone"></web-photo-filter>
+      <p>Blue monotone</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="violen_tomato"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="violen_tomato"></web-photo-filter>
+      <p>Violent tomato</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="greyscale"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="greyscale"></web-photo-filter>
+      <p>Greyscale</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="brightness"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="brightness" level="1.2"></web-photo-filter>
+      <p>Brightness</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="contrast"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="saturation"></web-photo-filter>
+      <p>Saturation</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="hue"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="contrast"></web-photo-filter>
+      <p>Contrast</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="brownie"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="hue" level="120"></web-photo-filter>
+      <p>Hue</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="vintage"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="brownie"></web-photo-filter>
+      <p>Brownie</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="koda"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="vintage"></web-photo-filter>
+      <p>Vintage</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="technicolor"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="koda"></web-photo-filter>
+      <p>Koda</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="polaroid"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="technicolor"></web-photo-filter>
+      <p>Technicolor</p>
+    </div>
 
-    <web-photo-filter src="assets/img/test.jpg" filter="bgr"></web-photo-filter>
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="polaroid"></web-photo-filter>
+      <p>Polaroid</p>
+    </div>
+
+    <div>
+      <web-photo-filter src="assets/img/test.jpg" filter="bgr"></web-photo-filter>
+      <p>Bgr</p>
+    </div>
   </div>
 
-
-
+  <footer>
+    <a href="https://github.com/peterpeterparker/web-photo-filter"><img src="https://help.github.com/assets/images/site/invertocat.png"> Github</a>
+  </footer>
 
 </body>
 </html>

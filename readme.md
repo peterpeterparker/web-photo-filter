@@ -79,7 +79,9 @@ The only mandatory parameter is `src` respectively the source of the image. Righ
 
 Filter is optional. Omitting this attribute or specifying a null value will result in no processing, the source image gonna be displayed.
 
-The list of available filters (TODO: showcase) are available in class `src/types/web-photo-filter-type.tsx`  
+The list of available filters is available in class `src/types/web-photo-filter-type.tsx`  
+
+`filter` is a **string** parameter
 
 #### Example: Sepia
 
@@ -111,6 +113,23 @@ Sometimes it's handy to keep the source image not displayed in the DOM (for exam
 
     <web-photo-filter src="assets/img/test.jpg" filter="sepia" keep="true"></web-photo-filter>
     
+`keep` is a **boolean** parameter
+    
+### Level
+
+Some filters (brightness, saturation, contrast and hue) are variable. To modifiy their default impact, you could use the variable `level`
+
+    <web-photo-filter src="assets/img/test.jpg" filter="brightness" level="1.2"></web-photo-filter>
+    
+`level` is a **number** parameter
+    
+
+## Showcase
+
+A showcase of all filters is available at [https://web-photo-filter.firebaseapp.com](https://web-photo-filter.firebaseapp.com)  
+
+The above showcase is the `www` folder of this project deployed in Firebase. If you clone the repository you could run it locally using `npm start`
+
 ## Credits
 
 This Web Component would not had been possible without the brilliant [article](https://www.madebymike.com.au/writing/canvas-image-manipulation/) and WebGL core processing code written by [Mike Riethmuller](https://github.com/MadeByMike) :heart:

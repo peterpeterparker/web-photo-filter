@@ -1,6 +1,6 @@
 export class WebPhotoFilterType {
 
-  static getFilters():any {
+  static getFilters(level: number):any {
     return {
       SEPIA: [
         1.351, 0, 0, 0, 0,
@@ -26,9 +26,10 @@ export class WebPhotoFilterType {
         1, 0, 0, 0, 0,
         0, 0, 0, 1, 0
       ],
-      BRIGHTNESS: WebPhotoFilterType.brightnessMatrix(1.5),
-      CONTRAST: WebPhotoFilterType.contrastMatrix(0.51),
-      HUE: WebPhotoFilterType.hueMatrix(90),
+      BRIGHTNESS: WebPhotoFilterType.brightnessMatrix(level ? level : 1.5),
+      SATURATION: WebPhotoFilterType.saturationMatrix(level ? level : 1.5),
+      CONTRAST: WebPhotoFilterType.contrastMatrix(level ? level : 1.5),
+      HUE: WebPhotoFilterType.hueMatrix(level ? level : 90),
       BROWNIE: [
         0.5997023582458496,0.3455324172973633,-0.27082985639572144,0,0.186007559299469,
         -0.0377032496035099,0.8609577417373657,0.1505955308675766,0,-0.14497417211532593,
@@ -69,26 +70,35 @@ export class WebPhotoFilterType {
   }
 
   private static brightnessMatrix(brigthness: number): any {
-    let b: number = (brigthness || 0) + 1;
-
     return [
-      b, 0, 0, 0, 0,
-      0, b, 0, 0, 0,
-      0, 0, b, 0, 0,
+      brigthness, 0, 0, 0, 0,
+      0, brigthness, 0, 0, 0,
+      0, 0, brigthness, 0, 0,
       0, 0, 0, 1, 0
     ];
   }
 
   private static contrastMatrix(amount: number): any {
-    let v: number = (amount || 0) + 1;
-    let o: number = (v-1.25);
+    let v: number = amount;
+    let o: number = -128 * (v-1);
 
-    return [
+    return WebPhotoFilterType.normalizeMatrix([
       v, 0, 0, 0, o,
       0, v, 0, 0, o,
       0, 0, v, 0, o,
       0, 0, 0, 1, 0
-    ];
+    ]);
+  }
+
+  private static normalizeMatrix(matrix: any): any {
+    // Normalize the offset component to 0-1
+
+    matrix[4] /= 255;
+    matrix[9] /= 255;
+    matrix[14] /= 255;
+    matrix[19] /= 255;
+
+    return matrix;
   }
 
   private static hueMatrix(rotation: number): any {
@@ -108,16 +118,27 @@ export class WebPhotoFilterType {
     ]
   }
 
-  static getFilter(key: string): number[] {
+  private static saturationMatrix(amount: number): any {
+    let x: number = (amount || 0) * 2/3 + 1;
+    let y: number = ((x-1) *-0.5);
+    return [
+      x, y, y, 0, 0,
+      y, x, y, 0, 0,
+      y, y, x, 0, 0,
+      0, 0, 0, 1, 0
+    ];
+  }
+
+  static getFilter(key: string, filterValue: number): number[] {
     if (!key || 0 === key.length) {
       return null;
     }
 
     let result: number[] = null;
 
-    Object.keys(WebPhotoFilterType.getFilters()).forEach((filterKey: string) => {
+    Object.keys(WebPhotoFilterType.getFilters(filterValue)).forEach((filterKey: string) => {
       if (key.toUpperCase() === filterKey) {
-        result = WebPhotoFilterType.getFilters()[filterKey];
+        result = WebPhotoFilterType.getFilters(filterValue)[filterKey];
       }
     });
 
