@@ -123,6 +123,13 @@ Some filters (brightness, saturation, contrast and hue) are variable. To modifiy
     
 `level` is a **number** parameter
     
+
+## Showcase
+
+A showcase of all filters is available at [https://web-photo-filter.firebaseapp.com](https://web-photo-filter.firebaseapp.com)  
+
+The above showcase is the `www` folder of this project deployed in Firebase. If you clone the repository you could run it locally using `npm start`
+
 ## Credits
 
 This Web Component would not had been possible without the brilliant [article](https://www.madebymike.com.au/writing/canvas-image-manipulation/) and WebGL core processing code written by [Mike Riethmuller](https://github.com/MadeByMike) :heart:
