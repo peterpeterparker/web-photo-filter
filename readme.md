@@ -99,13 +99,15 @@ or
      
      <web-photo-filter src="assets/img/test.jpg"></web-photo-filter>
 
-### Events
+### FilterLoad
 
 If you would like to start or process the result after the component did finished is processing, an event will be triggered containing the resulting image (no filter) or canvas and an indication telling you if WebGL is supported or not. 
 
     <web-photo-filter (filterLoad)="imageLoaded($event)" src="{{imgURI}}" filter="{{filter}}"></web-photo-filter>
     
 The description of the event is available in the interface `src/types/web-photo-filter-result.tsx`
+
+`filterLoad` emit an **event** of type `WebPhotoFilterResult`
 
 ### Keep
 
