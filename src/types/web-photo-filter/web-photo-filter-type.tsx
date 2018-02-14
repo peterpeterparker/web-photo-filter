@@ -1,6 +1,6 @@
 export class WebPhotoFilterType {
 
-  static getFilters():any {
+  static getFilters(level: number):any {
     return {
       SEPIA: [
         1.351, 0, 0, 0, 0,
@@ -26,10 +26,10 @@ export class WebPhotoFilterType {
         1, 0, 0, 0, 0,
         0, 0, 0, 1, 0
       ],
-      BRIGHTNESS: WebPhotoFilterType.brightnessMatrix(1.5),
-      SATURATION: WebPhotoFilterType.saturationMatrix(1.5),
-      CONTRAST: WebPhotoFilterType.contrastMatrix(1.5),
-      HUE: WebPhotoFilterType.hueMatrix(90),
+      BRIGHTNESS: WebPhotoFilterType.brightnessMatrix(level ? level : 1.5),
+      SATURATION: WebPhotoFilterType.saturationMatrix(level ? level : 1.5),
+      CONTRAST: WebPhotoFilterType.contrastMatrix(level ? level : 1.5),
+      HUE: WebPhotoFilterType.hueMatrix(level ? level : 90),
       BROWNIE: [
         0.5997023582458496,0.3455324172973633,-0.27082985639572144,0,0.186007559299469,
         -0.0377032496035099,0.8609577417373657,0.1505955308675766,0,-0.14497417211532593,
@@ -129,16 +129,16 @@ export class WebPhotoFilterType {
     ];
   }
 
-  static getFilter(key: string): number[] {
+  static getFilter(key: string, filterValue: number): number[] {
     if (!key || 0 === key.length) {
       return null;
     }
 
     let result: number[] = null;
 
-    Object.keys(WebPhotoFilterType.getFilters()).forEach((filterKey: string) => {
+    Object.keys(WebPhotoFilterType.getFilters(filterValue)).forEach((filterKey: string) => {
       if (key.toUpperCase() === filterKey) {
-        result = WebPhotoFilterType.getFilters()[filterKey];
+        result = WebPhotoFilterType.getFilters(filterValue)[filterKey];
       }
     });
 

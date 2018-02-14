@@ -79,7 +79,9 @@ The only mandatory parameter is `src` respectively the source of the image. Righ
 
 Filter is optional. Omitting this attribute or specifying a null value will result in no processing, the source image gonna be displayed.
 
-The list of available filters (TODO: showcase) are available in class `src/types/web-photo-filter-type.tsx`  
+The list of available filters is available in class `src/types/web-photo-filter-type.tsx`  
+
+`filter` is a **string** parameter
 
 #### Example: Sepia
 
@@ -110,6 +112,16 @@ The description of the event is available in the interface `src/types/web-photo-
 Sometimes it's handy to keep the source image not displayed in the DOM (for example if you post process the image or the canvas with [cropperjs](https://github.com/fengyuanchen/cropperjs)). To do so, use the optional attribute `keep`
 
     <web-photo-filter src="assets/img/test.jpg" filter="sepia" keep="true"></web-photo-filter>
+    
+`keep` is a **boolean** parameter
+    
+### Level
+
+Some filters (brightness, saturation, contrast and hue) are variable. To modifiy their default impact, you could use the variable `level`
+
+    <web-photo-filter src="assets/img/test.jpg" filter="brightness" level="1.2"></web-photo-filter>
+    
+`level` is a **number** parameter
     
 ## Credits
 
