@@ -26,7 +26,7 @@ export class WebPhotoFilterType {
         1, 0, 0, 0, 0,
         0, 0, 0, 1, 0
       ],
-      BRIGHTNESS: WebPhotoFilterType.brightnessMatrix(level ? level : 1.5),
+      BRIGHTNESS: WebPhotoFilterType.brightnessMatrix(level ? level : 1.4),
       SATURATION: WebPhotoFilterType.saturationMatrix(level ? level : 1.5),
       CONTRAST: WebPhotoFilterType.contrastMatrix(level ? level : 1.5),
       HUE: WebPhotoFilterType.hueMatrix(level ? level : 90),
