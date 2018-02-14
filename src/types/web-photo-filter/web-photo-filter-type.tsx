@@ -27,6 +27,7 @@ export class WebPhotoFilterType {
         0, 0, 0, 1, 0
       ],
       BRIGHTNESS: WebPhotoFilterType.brightnessMatrix(1.5),
+      SATURATION: WebPhotoFilterType.saturationMatrix(1.5),
       CONTRAST: WebPhotoFilterType.contrastMatrix(0.51),
       HUE: WebPhotoFilterType.hueMatrix(90),
       BROWNIE: [
@@ -106,6 +107,17 @@ export class WebPhotoFilterType {
       lumR+cos*(-lumR)+sin*(-(1-lumR)),lumG+cos*(-lumG)+sin*(lumG),lumB+cos*(1-lumB)+sin*(lumB),0,0,
       0, 0, 0, 1, 0
     ]
+  }
+
+  private static saturationMatrix(amount: number): any {
+    let x: number = (amount || 0) * 2/3 + 1;
+    let y: number = ((x-1) *-0.5);
+    return [
+      x, y, y, 0, 0,
+      y, x, y, 0, 0,
+      y, y, x, 0, 0,
+      0, 0, 0, 1, 0
+    ];
   }
 
   static getFilter(key: string): number[] {
