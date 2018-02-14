@@ -67,6 +67,8 @@ Don't forget to also update your `package.json` in order to use your local modif
             "ionic_copy": "./scripts/copy.config.js"
           }
 
+**WARNING** Right now, including a Stencil component like this project in a Ionic app, will fail at runtime on Android >= 7. This has been reported in following issue [https://github.com/ionic-team/stencil/issues/517](https://github.com/ionic-team/stencil/issues/517)   
+
 ## Getting Started
 
 The Web Photo Filter Component could be use like following:
