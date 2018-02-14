@@ -28,7 +28,7 @@ export class WebPhotoFilterType {
       ],
       BRIGHTNESS: WebPhotoFilterType.brightnessMatrix(1.5),
       SATURATION: WebPhotoFilterType.saturationMatrix(1.5),
-      CONTRAST: WebPhotoFilterType.contrastMatrix(0.51),
+      CONTRAST: WebPhotoFilterType.contrastMatrix(1.5),
       HUE: WebPhotoFilterType.hueMatrix(90),
       BROWNIE: [
         0.5997023582458496,0.3455324172973633,-0.27082985639572144,0,0.186007559299469,
@@ -70,26 +70,35 @@ export class WebPhotoFilterType {
   }
 
   private static brightnessMatrix(brigthness: number): any {
-    let b: number = (brigthness || 0) + 1;
-
     return [
-      b, 0, 0, 0, 0,
-      0, b, 0, 0, 0,
-      0, 0, b, 0, 0,
+      brigthness, 0, 0, 0, 0,
+      0, brigthness, 0, 0, 0,
+      0, 0, brigthness, 0, 0,
       0, 0, 0, 1, 0
     ];
   }
 
   private static contrastMatrix(amount: number): any {
-    let v: number = (amount || 0) + 1;
-    let o: number = (v-1.25);
+    let v: number = amount;
+    let o: number = -128 * (v-1);
 
-    return [
+    return WebPhotoFilterType.normalizeMatrix([
       v, 0, 0, 0, o,
       0, v, 0, 0, o,
       0, 0, v, 0, o,
       0, 0, 0, 1, 0
-    ];
+    ]);
+  }
+
+  private static normalizeMatrix(matrix: any): any {
+    // Normalize the offset component to 0-1
+
+    matrix[4] /= 255;
+    matrix[9] /= 255;
+    matrix[14] /= 255;
+    matrix[19] /= 255;
+
+    return matrix;
   }
 
   private static hueMatrix(rotation: number): any {
