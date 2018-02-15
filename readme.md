@@ -54,12 +54,14 @@ After having installed the library, proceed with following steps:
 
          import 'web-photo-filter';
          
-3. At this time, the Web Component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, overwrite `copy.config.js` from [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js) and add the following `copyWebPhotoFilter` block
+3. At this time, the Web Component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, create a local custom `copy.config.js` (which gonna be processed as another config of [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js)) and add the following block
 
-       copyWebPhotoFilter: {
+       module.exports = {
+         copyWebPhotoFilter: {
            src: ['{{ROOT}}/node_modules/web-photo-filter/dist/webphotofilter**/*'],
            dest: '{{BUILD}}'
-       }
+         }
+       } 
 
 Don't forget to also update your `package.json` in order to use your local modified `copy.config.js` file
 
