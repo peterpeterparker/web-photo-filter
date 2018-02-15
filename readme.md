@@ -36,7 +36,7 @@ The project framework and structure follows the [stencil-component-starter](http
 
 After having installed the library, proceed with following steps:
 
-1. In the module you would like to use the component, import and add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas
+1. In the module where you would like to use the component, import and add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas
 
         @NgModule({
             declarations: [
