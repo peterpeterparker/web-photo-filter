@@ -1,6 +1,6 @@
 # Web Photo Filter
 
-Web Photo Filter is a Web Component to apply Instagram-like WebGL filters to photos
+Web Photo Filter is a web component to apply Instagram-like WebGL filters to photos
 
 ## Goals
 
@@ -24,7 +24,7 @@ Furthermore, in order to not produce error, in case WebGL would not be supported
 
 ### Lightweight, fast boot time, lazy loading, support across the most popular frontend frameworks
 
-This project is a Web Component build with the amazing [Stencil](https://stenciljs.com) compiler.
+This project is a web component build with the amazing [Stencil](https://stenciljs.com) compiler.
 
 The project framework and structure follows the [stencil-component-starter](https://github.com/ionic-team/stencil-component-starter)
 
@@ -50,11 +50,11 @@ After having installed the library, proceed with following steps:
         export class MyPageModule {
         }
         
-2. In `app.modules` (the main module of your app), import the component. As far as I understood, Web Component built with Stencil inherit Lazy Loading, therefore, no worries about effect on your boot time
+2. In `app.modules` (the main module of your app), import the component. As far as I understood, web component built with Stencil inherit Lazy Loading, therefore, no worries about effect on your boot time
 
          import 'web-photo-filter';
          
-3. At this time, the Web Component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, create a local custom `copy.config.js` (which gonna be processed as another config of [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js)) and add the following block
+3. At this time, the web component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, create a local custom `copy.config.js` (which gonna be processed as another config of [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js)) and add the following block
 
        module.exports = {
          copyWebPhotoFilter: {
@@ -138,7 +138,7 @@ The above showcase is the `www` folder of this project deployed in Firebase. If 
 
 ## Credits
 
-This Web Component would not had been possible without the brilliant [article](https://www.madebymike.com.au/writing/canvas-image-manipulation/) and WebGL core processing code written by [Mike Riethmuller](https://github.com/MadeByMike) :heart:
+This web component would not had been possible without the brilliant [article](https://www.madebymike.com.au/writing/canvas-image-manipulation/) and WebGL core processing code written by [Mike Riethmuller](https://github.com/MadeByMike) :heart:
 
 The sources of nine filters (Brownie, Brightnes, etc.) were adapted from the project [WebGLImageFilter](https://github.com/phoboslab/WebGLImageFilter) by [Dominic Szablewski](http://phoboslab.org/) :+1:
 
