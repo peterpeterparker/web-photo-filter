@@ -455,5 +455,36 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+  <!-- Display a warning if WebGL is not supported -->
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var canvas = document.createElement('canvas');
+
+      var ctx;
+      try {
+        ctx = canvas.getContext('webgl');
+      } catch (e) {
+        // Nothing
+      }
+
+      if (!ctx || !(ctx instanceof WebGLRenderingContext)) {
+        var noWebGLMsg = document.createElement("div");
+        noWebGLMsg.classList = new Array();
+        noWebGLMsg.classList.add("alert-danger");
+        noWebGLMsg.classList.add("text-center");
+        noWebGLMsg.classList.add("mb-3");
+        noWebGLMsg.textContent = "WebGL is not supported by your current browser!";
+
+        var rowShowcase = document.getElementsByClassName("col-md-12");
+
+        if (rowShowcase && rowShowcase.length == 1) {
+          rowShowcase[0].appendChild(noWebGLMsg);
+        } else {
+          console.log("WebGL is not supported by your current browser!");
+        }
+      }
+    });
+  </script>
 </body>
 </html>
