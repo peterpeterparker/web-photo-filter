@@ -1,6 +1,11 @@
+const sass = require('@stencil/sass');
+
 exports.config = {
   namespace: 'webphotofilter',
-  generateDistribution: true
+  generateDistribution: true,
+  plugins: [
+    sass()
+  ]
 };
 
 exports.devServer = {
