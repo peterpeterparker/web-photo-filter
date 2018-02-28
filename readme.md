@@ -16,7 +16,7 @@ Most Javascript based algorithm are not enough performing to be used on mobile d
 
 ### Supported by major browsers and devices
 
-This component, at least for the moment, February 2018, will use [WebGL](https://caniuse.com/#feat=webgl) because at this time this technology is well supported across browser and devices.
+This component, at least for the moment, February 2018, will use [WebGL](https://caniuse.com/#feat=webgl) because at this time this technology is well supported across browsers and devices.
 
 [WebGL 2](https://caniuse.com/#search=webgl%202) might be use later on, but this technology isn't enough well supported right now.
 
@@ -144,9 +144,9 @@ The sources of nine filters (Brownie, Brightnes, etc.) were adapted from the pro
 
 ## Limits
 
-Even if WebGL is nowadays well supported by major modern browser, there might be some cases, were the filters ain't gonna work. In my case, I did  implement a fallback scenario, in case WebGl would not be supported.
+Even if WebGL is nowadays well supported by major modern browser, there might be some cases, were the filters ain't gonna work. In my case, I did  implement a fallback scenario, in case WebGL would not be supported.
 
-I have mostly created this web component in order to allow the users of my mobile application [Fluster](https://fluster.io) enhance their photos with filters. I have decided to fix limits in order to deploy my [Ionic](https://ionicframework.com) app in stores and to ensure a good quality of my product.
+Furthermore, I have decided to fix limits in order to deploy my [Ionic](https://ionicframework.com) app in stores and to ensure a good quality of my app [Fluster](https://fluster.io).
 
 ### My limitation
 
