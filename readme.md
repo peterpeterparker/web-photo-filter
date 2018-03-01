@@ -146,64 +146,20 @@ The sources of nine filters (Brownie, Brightnes, etc.) were adapted from the pro
 
 Even if WebGL is nowadays well supported by major modern browser, there might be some cases, were the filters ain't gonna work. In my case, I did  implement a fallback scenario, in case WebGL would not be supported.
 
-Furthermore, I have decided to fix limits in order to deploy my [Ionic](https://ionicframework.com) app in stores and to ensure a good quality of my app [Fluster](https://fluster.io).
+### iOS (WKWebView)
 
-### My limitation
+According my tests, these filters work very well on iPhone >= 6. It's possible to load all of them in a same page without any problems.
 
-I used the Cordova plugin [Device](https://github.com/apache/cordova-plugin-device) to fix the following limitations.
-
-#### iOS
-
-According my tests, these filters work very well on iPhone >= 6. It's possible to load all of them in a same page without any problems. Therefore, I did limit the use of the filters to these types of phones.
-
-    displayFiltersOnIOS(): boolean {
-        if (Comparator.isStringEmpty(this.device.model)) {
-            return false;
-        }
-
-        // No Filter on iPhone < 6
-        // See https://www.theiphonewiki.com/wiki/Models for models list
-        // iPhone 5s = device.model iPhone6,1 or iPhone 6,2
-        if (this.device.model.indexOf('iPhone1') > -1 ||
-            this.device.model.indexOf('iPhone2') > -1 ||
-            this.device.model.indexOf('iPhone3') > -1 ||
-            this.device.model.indexOf('iPhone4') > -1 ||
-            this.device.model.indexOf('iPhone5') > -1 ||
-            this.device.model.indexOf('iPhone6') > -1) {
-            return false;
-        }
-
-        return true;
-    }
-
-#### Android
+### Android (WebView)
 
 According my tests, these filters work very well on Android >= 7. I did test them on a Samsung Edge (Android 7.1), Nexus 5X and Sony (Android 8,1).
 
 But, Android WebView seems to be able to handle less active canvas than iPhones. Therefore I just didn't used all filters in the same pages but only integrated a couple of them.
 
-Furthermore, I did fix the following limitation regarding the Android version:
+#### Device detection (Cordova)
 
-    displayFiltersOnAndroid(): boolean {
-            if (Comparator.isStringEmpty(this.device.version)) {
-                return false;
-            }
-    
-            if (this.device.version.length < 1) {
-                return false;
-            }
-    
-            if (this.device.version.startsWith('1') ||
-                this.device.version.startsWith('2') ||
-                this.device.version.startsWith('3') ||
-                this.device.version.startsWith('4') ||
-                this.device.version.startsWith('5') ||
-                this.device.version.startsWith('6')) {
-                return false;
-            }
-    
-            return true;
-        }
+I used the Cordova plugin [Device](https://github.com/apache/cordova-plugin-device) to restrict the use of the filters according the devices' models or versions.
+
 
 ## License
 
