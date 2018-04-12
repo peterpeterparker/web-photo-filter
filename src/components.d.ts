@@ -59,7 +59,7 @@ declare global {
       'filter'?: string;
       'keep'?: boolean;
       'level'?: number;
-      'onFilterLoad'?: (event: CustomEvent<WebPhotoFilterResult>) => void;
+      'onFilterLoad'?: (event: CustomEvent) => void;
       'src'?: string;
     }
   }
