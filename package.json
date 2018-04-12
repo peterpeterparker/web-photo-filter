@@ -1,6 +1,6 @@
 {
   "name": "web-photo-filter",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A web component to apply Instagram-like WebGL filters to photos",
   "keywords": [
     "photo",
