@@ -20,7 +20,9 @@ export class WebPhotoFilterComponent {
 
   @Prop() keep: boolean = false;
 
-  @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
+  // TODO: Issue https://github.com/ionic-team/stencil/issues/724
+  // Instead of generic, replace with EventEmitter<WebPhotoFilterResult> once issue solved
+  @Event() filterLoad: EventEmitter;
 
   @Element() el: HTMLElement;
 
