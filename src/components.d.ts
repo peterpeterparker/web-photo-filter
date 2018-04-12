@@ -3,6 +3,9 @@
  * It contains typing information for all components that exist in this project
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
+
+import '@stencil/core';
+
 declare global {
   namespace JSX {
     interface Element {}
@@ -13,41 +16,51 @@ declare global {
   interface HTMLStencilElement extends HTMLElement {
     componentOnReady(): Promise<this>;
     componentOnReady(done: (ele?: this) => void): void;
+
+    forceUpdate(): void;
   }
 
   interface HTMLAttributes {}
 }
 
-
 import {
-  WebPhotoFilterComponent as WebPhotoFilter
-} from './components/web-photo-filter/web-photo-filter';
+  EventEmitter,
+} from '@stencil/core';
+import {
+  WebPhotoFilterResult,
+} from './types/web-photo-filter/web-photo-filter-result';
 
 declare global {
-  interface HTMLWebPhotoFilterElement extends WebPhotoFilter, HTMLStencilElement {
+  interface HTMLWebPhotoFilterElement extends HTMLStencilElement {
+    'alt': string;
+    'filter': string;
+    'keep': boolean;
+    'level': number;
+    'src': string;
   }
   var HTMLWebPhotoFilterElement: {
     prototype: HTMLWebPhotoFilterElement;
     new (): HTMLWebPhotoFilterElement;
   };
   interface HTMLElementTagNameMap {
-    "web-photo-filter": HTMLWebPhotoFilterElement;
+    'web-photo-filter': HTMLWebPhotoFilterElement;
   }
   interface ElementTagNameMap {
-    "web-photo-filter": HTMLWebPhotoFilterElement;
+    'web-photo-filter': HTMLWebPhotoFilterElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "web-photo-filter": JSXElements.WebPhotoFilterAttributes;
+      'web-photo-filter': JSXElements.WebPhotoFilterAttributes;
     }
   }
   namespace JSXElements {
     export interface WebPhotoFilterAttributes extends HTMLAttributes {
-      alt?: string;
-      filter?: string;
-      keep?: boolean;
-      level?: number;
-      src?: string;
+      'alt'?: string;
+      'filter'?: string;
+      'keep'?: boolean;
+      'level'?: number;
+      'onFilterLoad'?: (event: CustomEvent<WebPhotoFilterResult>) => void;
+      'src'?: string;
     }
   }
 }
