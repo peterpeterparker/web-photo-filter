@@ -23,12 +23,6 @@ declare global {
   interface HTMLAttributes {}
 }
 
-import {
-  EventEmitter,
-} from '@stencil/core';
-import {
-  WebPhotoFilterResult,
-} from './types/web-photo-filter/web-photo-filter-result';
 
 declare global {
   interface HTMLWebPhotoFilterElement extends HTMLStencilElement {

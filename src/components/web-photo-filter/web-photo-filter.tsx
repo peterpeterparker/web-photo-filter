@@ -1,7 +1,6 @@
 import {Component, Element, Event, EventEmitter, Prop} from '@stencil/core';
 
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
-import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
 
 @Component({
   tag: 'web-photo-filter',
