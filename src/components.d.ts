@@ -25,13 +25,19 @@ declare global {
 
 
 declare global {
-  interface HTMLWebPhotoFilterElement extends HTMLStencilElement {
-    'alt': string;
-    'filter': string;
-    'keep': boolean;
-    'level': number;
-    'src': string;
+
+  namespace StencilComponents {
+    interface WebPhotoFilter {
+      'alt': string;
+      'filter': string;
+      'keep': boolean;
+      'level': number;
+      'src': string;
+    }
   }
+
+  interface HTMLWebPhotoFilterElement extends StencilComponents.WebPhotoFilter, HTMLStencilElement {}
+
   var HTMLWebPhotoFilterElement: {
     prototype: HTMLWebPhotoFilterElement;
     new (): HTMLWebPhotoFilterElement;
