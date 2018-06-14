@@ -13,12 +13,9 @@ declare global {
   }
   namespace JSXElements {}
 
-  interface HTMLElement {
-    componentOnReady?: () => Promise<this | null>;
-  }
-
   interface HTMLStencilElement extends HTMLElement {
     componentOnReady(): Promise<this>;
+    componentOnReady(done: (ele?: this) => void): void;
 
     forceUpdate(): void;
   }
@@ -69,5 +66,3 @@ declare global {
 }
 
 declare global { namespace JSX { interface StencilJSX {} } }
-
-export declare function defineCustomElements(window: any): void;
