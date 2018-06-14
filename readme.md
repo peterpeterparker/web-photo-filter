@@ -118,6 +118,28 @@ Sometimes it's handy to keep the source image not displayed in the DOM (for exam
     <web-photo-filter src="assets/img/test.jpg" filter="sepia" keep="true"></web-photo-filter>
     
 `keep` is a **boolean** parameter
+
+#### Hide the source image
+
+If you want to hide the source image you kept, you could for example proceed like following
+
+1. Include in your app the filters in a div
+
+          <div id="preview">
+                 <web-photo-filter src="assets/img/test.jpg" filter="sepia" keep="true"></web-photo-filter>
+          </div>
+
+2. Add the following scss code to your app
+
+        #preview {
+             web-photo-filter {
+                 > img:first-of-type, > canvas:first-of-type {
+                     max-width: 100%;
+                     display: none;
+                 }
+             }
+        }
+                     
     
 ### Level
 
