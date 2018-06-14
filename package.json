@@ -13,7 +13,7 @@
     "web component",
     "stencil"
   ],
-  "main": "dist/webphotofilter.js",
+  "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
@@ -21,7 +21,7 @@
     "readme.md",
     "LICENSE"
   ],
-  "browser": "dist/webphotofilercomponent.js",
+  "module": "dist/esm/index.js",
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
@@ -32,12 +32,12 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@stencil/core": "^0.7.24",
+    "@stencil/core": "^0.9.7",
     "@stencil/dev-server": "latest",
-    "@stencil/sass": "0.0.3",
+    "@stencil/sass": "0.0.5",
     "@stencil/utils": "latest",
-    "@types/jest": "^21.1.1",
-    "jest": "^21.2.1"
+    "@types/jest": "^23.1.0",
+    "jest": "^23.1.0"
   },
   "repository": {
     "type": "git",
