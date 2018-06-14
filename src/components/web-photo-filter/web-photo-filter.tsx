@@ -140,7 +140,7 @@ export class WebPhotoFilterComponent {
 
     let ctx: WebGLRenderingContext;
     try {
-      ctx = canvas.getContext('webgl');
+      ctx = canvas.getContext('webgl', {preserveDrawingBuffer: true});
     } catch (e) {
       // In case we couldn't instantiate WebGL, do nothing
       this.emitFilterApplied(image, false);
@@ -229,7 +229,7 @@ export class WebPhotoFilterComponent {
 
     let ctx: WebGLRenderingContext;
     try {
-      ctx = canvas.getContext('webgl');
+      ctx = canvas.getContext('webgl', {preserveDrawingBuffer: true});
     } catch (e) {
       return false;
     }
