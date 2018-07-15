@@ -13,7 +13,7 @@
     "web component",
     "stencil"
   ],
-  "main": "dist/webphotofilter.js",
+  "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
@@ -32,12 +32,12 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@stencil/core": "^0.8.2",
+    "@stencil/core": "^0.10.6",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.0.5",
     "@stencil/utils": "latest",
-    "@types/jest": "^23.1.0",
-    "jest": "^23.1.0"
+    "@types/jest": "^23.1.6",
+    "jest": "^23.4.1"
   },
   "repository": {
     "type": "git",
