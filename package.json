@@ -1,6 +1,6 @@
 {
   "name": "web-photo-filter",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "A web component to apply Instagram-like WebGL filters to photos",
   "keywords": [
     "photo",
@@ -32,12 +32,14 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@stencil/core": "^0.10.6",
+    "@stencil/core": "^0.11.0",
     "@stencil/dev-server": "latest",
-    "@stencil/sass": "0.0.5",
+    "@stencil/postcss": "^0.1.0",
+    "@stencil/sass": "^0.1.0",
     "@stencil/utils": "latest",
-    "@types/jest": "^23.1.6",
-    "jest": "^23.4.1"
+    "@types/jest": "^23.3.1",
+    "autoprefixer": "^9.1.0",
+    "jest": "^23.4.2"
   },
   "repository": {
     "type": "git",
