@@ -187,6 +187,9 @@ But, Android WebView seems to be able to handle less active canvas than iPhones.
 
 I used the Cordova plugin [Device](https://github.com/apache/cordova-plugin-device) to restrict the use of the filters according the devices' models or versions.
 
+## Tutorial
+
+[Simon Grimm (@saimon24)](https://github.com/saimon24) published a walkthrough tutorial ["Ionic Image Filter Like Instagram Using WebGL Filters"](https://ionicacademy.com/ionic-image-filter-webgl/) which displays step by step how to create a Ionic app and include this component easily 
 
 ## License
 
