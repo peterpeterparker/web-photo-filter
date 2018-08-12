@@ -47,7 +47,10 @@ After having installed the library, proceed then with following steps:
                 MyPage
             ],
             imports: [
-                IonicPageModule.forChild(MyPage)
+                CommonModule,
+                FormsModule,
+                IonicModule,
+                RouterModule.forChild(routes)
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
