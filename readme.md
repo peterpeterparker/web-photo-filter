@@ -32,9 +32,13 @@ The project framework and structure follows the [stencil-component-starter](http
 
     $ npm install web-photo-filter
 
-### Installation in a Ionic project
+### Installation in a Ionic v4 project
 
-After having installed the library, proceed with following steps:
+First of all notice that I wasn't able to integrate the library as described in the [Stencil documentation](https://stenciljs.com/docs/framework-integration)
+
+But, I was able to integrate the library in an Ionic v4 app as described below
+
+After having installed the library, proceed then with following steps:
 
 1. In the module where you would like to use the component, import and add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas
 
@@ -50,24 +54,24 @@ After having installed the library, proceed with following steps:
         export class MyPageModule {
         }
         
-2. In `app.modules` (the main module of your app), import the component. As far as I understood, web component built with Stencil inherit Lazy Loading, therefore, no worries about effect on your boot time
+2. In `index.html` import the component. As far as I understood, web component built with Stencil inherit Lazy Loading, therefore, no worries about effect on your boot time
 
-         import 'web-photo-filter';
+         <script async src="webphotofilter.js"></script>
          
-3. At this time, the web component installed under node_modules not gonna be automatically included in the vendor.js bundle. Therefore it need a tricks to be copied. To do so, create a local custom `copy.config.js` (which gonna be processed as another config of [ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts/blob/master/config/copy.config.js)) and add the following block
+3. Finally add the following to your `assets` configuration in your `angular.json` files in oder to include the component in your bundle
 
-       module.exports = {
-         copyWebPhotoFilter: {
-           src: ['{{ROOT}}/node_modules/web-photo-filter/dist/webphotofilter**/*'],
-           dest: '{{BUILD}}'
-         }
-       } 
-
-Don't forget to also update your `package.json` in order to use your local modified `copy.config.js` file
-
-        "config": {
-            "ionic_copy": "./scripts/copy.config.js"
-          }   
+       "assets": [
+           {
+             "glob": "webphotofilter.js",
+             "input": "node_modules/web-photo-filter/dist",
+             "output": "./"
+           },
+           {
+             "glob": "webphotofilter/*",
+             "input": "node_modules/web-photo-filter/dist",
+             "output": "./"
+           }
+       ]
 
 ## Getting Started
 
