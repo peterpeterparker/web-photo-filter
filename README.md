@@ -85,7 +85,7 @@ The Web Photo Filter Component could be use like following:
 
     <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
 
-The only required parameter is the img `srs` tag. Right now, the component does not support URL based images such as `https://url.com/myimage.jpg`
+The only required parameter is the img `src` tag. Right now, the component does not support URL based images such as `https://url.com/myimage.jpg`
 
 ### Filter
 
