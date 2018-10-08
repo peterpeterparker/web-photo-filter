@@ -2,31 +2,34 @@
 
 Web Photo Filter is a web component to apply Instagram-like WebGL filters to photos
 
+[![GitHub](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/fluster/web-photo-filter)
+[![npm](https://img.shields.io/npm/dm/web-photo-filter.svg)]()
+
 ## Goals
 
-The main goal of this component is to be implemented in the mobile application [Fluster](https://fluster.io) to let users, while posting their rooms to let and flats, enhance the photos of their offers in order to make them more attractive. 
+The main goal of this component is to be implemented in the mobile application [Fluster](https://fluster.io) to let users enhance photos of their rooms and flats to make their listings more attractive. 
 
-### Image modification and fast processing
+### Image modification solutions and fast processing
 
-Other web based solutions to filter and modify pictures like CSS (for example [Instagram.css](https://picturepan2.github.io/instagram.css/)) or Javascript were discarded to fulfill the above goal.
+Other web based filter solutions use CSS (for example [Instagram.css](https://picturepan2.github.io/instagram.css/)) or Javascript to modify images.
 
-A CSS solution would not modify the image itself but "only" applies a layer on it.
+CSS solutions do not modify the underlying image, and <strong>only</strong> apply a visual layer to it. 
 
-Most Javascript based algorithm are not enough performing to be used on mobile device (= the processing should be as fast as possible, almost instantaneous as Instagram is). 
+Most Javascript based solutions are not optimized well enough to be used on mobile devices, and speed was a top priority. We wanted to create an almost instantaneous filter solution, similar to what Instagram leverages in it's mobile applications. 
 
 ### Supported by major browsers and devices
 
-This component, at least for the moment, February 2018, will use [WebGL](https://caniuse.com/#feat=webgl) because at this time this technology is well supported across browsers and devices.
+As of Feburary 2018, Web Photo Filter utilizes [WebGL](https://caniuse.com/#feat=webgl) based technology because it is well supported across modern browsers and mobile devices. 
 
-[WebGL 2](https://caniuse.com/#search=webgl%202) might be use later on, but this technology isn't enough well supported right now.
+In the future, Web Photo Filter may use [WebGL 2](https://caniuse.com/#search=webgl%202) when it is better supported.
 
-Furthermore, in order to not produce error, in case WebGL would not be supported, the component will simply display the original image. 
+In the case that WebGL is not supported on a partciular platform, and to avoid producing an error, the component will display the original image without modifications.
 
 ### Lightweight, fast boot time, lazy loading, support across the most popular frontend frameworks
 
-This project is a web component build with the amazing [Stencil](https://stenciljs.com) compiler.
+This project is a web component built with the amazing [Stencil](https://stenciljs.com) compiler.
 
-The project framework and structure follows the [stencil-component-starter](https://github.com/ionic-team/stencil-component-starter)
+The project framework and structure follows the [stencil-component-starter](https://github.com/ionic-team/stencil-component-starter) project structure.
 
 ## Installation
 
@@ -34,13 +37,13 @@ The project framework and structure follows the [stencil-component-starter](http
 
 ### Installation in a Ionic v4 project
 
-First of all notice that I wasn't able to integrate the library as described in the [Stencil documentation](https://stenciljs.com/docs/framework-integration)
+> Please note that I was not able to integrate the library in an Ionic v4 app in a traditional way as described in the [Stencil documentation](https://stenciljs.com/docs/framework-integration)
 
-But, I was able to integrate the library in an Ionic v4 app as described below
+However, I was able to integrate the library as described below. 
 
-After having installed the library, proceed then with following steps:
+After you install the library, please proceed with the following steps:
 
-1. In the module where you would like to use the component, import and add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas
+1. Import the module into the component.module that you would like to use Web Photo Filter, and add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas.
 
         @NgModule({
             declarations: [
@@ -81,12 +84,12 @@ After having installed the library, proceed then with following steps:
 The Web Photo Filter Component could be use like following:
 
     <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
-    
-The only mandatory parameter is `src` respectively the source of the image. Right now, the component doesn't support Cors image (like https://url.com/myimage.jpg).
+
+The only required parameter is the img `srs` tag. Right now, the component does not support URL based images such as `https://url.com/myimage.jpg`
 
 ### Filter
 
-Filter is optional. Omitting this attribute or specifying a null value will result in no processing, the source image gonna be displayed.
+Filter is an optional parameter. Omitting this attribute or specifying a null value will result in no processing within the component. The source image will be displayed unmodified.
 
 The list of available filters is available in class `src/types/web-photo-filter-type.tsx`  
 
@@ -150,7 +153,8 @@ If you want to hide the source image you kept, you could for example proceed lik
     
 ### Level
 
-Some filters (brightness, saturation, contrast and hue) are variable. To modifiy their default impact, you could use the variable `level`
+Some filters (brightness, saturation, contrast and hue) are variable. To modify their default values, you could use the 
+variable `level`
 
     <web-photo-filter src="assets/img/test.jpg" filter="brightness" level="1.2"></web-photo-filter>
     
@@ -171,17 +175,17 @@ The sources of nine filters (Brownie, Brightnes, etc.) were adapted from the pro
 
 ## Limits
 
-Even if WebGL is nowadays well supported by major modern browser, there might be some cases, were the filters ain't gonna work. In my case, I did  implement a fallback scenario, in case WebGL would not be supported.
+WebGL is well supported by most modern browsers, but there may be some use cases where it is not. In the case that WebGL is not supported, there is a fallback scenario implemented in the component.
 
 ### iOS (WKWebView)
 
-According my tests, these filters work very well on iPhone >= 6. It's possible to load all of them in a same page without any problems.
+During testing I found that Web Photo Filter works very well on iPhone 6 and above. It is possible to load all filters on the same page without performance issues.
 
 ### Android (WebView)
 
-According my tests, these filters work very well on Android >= 7. I did test them on a Samsung Edge (Android 7.1), Nexus 5X and Sony (Android 8,1).
+During testing I found that these filters do not work very well on Android 7 and above. Testing for Android was ran on a Samsung Edge (Android 7.1), Nexus 5X and Sony (Android 8.1). 
 
-But, Android WebView seems to be able to handle less active canvas than iPhones. Therefore I just didn't used all filters in the same pages but only integrated a couple of them.
+The Android Webview seems to handle canvas less actively and it's iPhone counterpart. Therefore I do not recommend using all filters on the same page, but only integrating a few of them at a time, otherwise you'll see a negative performance impact.
 
 #### Device detection (Cordova)
 
