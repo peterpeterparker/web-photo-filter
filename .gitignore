@@ -23,3 +23,6 @@ UserInterfaceState.xcuserstate
 .env
 /web-photo-filter-*.tgz
 /www/
+
+.firebaserc
+firebase.json
