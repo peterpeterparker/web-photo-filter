@@ -1,3 +1,11 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/fluster/web-photo-filter/compare/v2.0.0...v2.1.0) (2018-08-19)
+
+### Libs
+
+* update Stencil ([#5](https://github.com/fluster/web-photo-filter/issues/6))
+* target ES2017 ([#6](https://github.com/fluster/web-photo-filter/issues/6))
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/fluster/web-photo-filter/compare/v1.1.1...v2.0.0) (2018-08-12)
 
