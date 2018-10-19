@@ -3,7 +3,7 @@
 
 ### Libs
 
-* update Stencil ([#5](https://github.com/fluster/web-photo-filter/issues/6))
+* update Stencil ([#5](https://github.com/fluster/web-photo-filter/issues/5))
 * target ES2017 ([#6](https://github.com/fluster/web-photo-filter/issues/6))
 
 <a name="2.0.0"></a>
