@@ -50,7 +50,7 @@
   "bugs": {
     "url": "https://github.com/peterpeterparker/web-photo-filter"
   },
-  "homepage": "https://github.com/peterpeterparker/web-photo-filter",
+  "homepage": "https://webphotofilter.com",
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"

@@ -163,7 +163,7 @@ variable `level`
 
 ## Showcase
 
-A showcase of all filters is available at [https://web-photo-filter.firebaseapp.com](https://web-photo-filter.firebaseapp.com)  
+A showcase of all filters is available at [https://webphotofilter.com](https://webphotofilter.com)  
 
 The above showcase is the `www` folder of this project deployed in Firebase. If you clone the repository you could run it locally using `npm start`
 
