@@ -14,7 +14,7 @@ export class WebPhotoFilterType {
         0.50, 0, 0, 0, 0.50,
         0, 0, 0, 1, 0
       ],
-      VIOLEN_TOMATO: [
+      VIOLENT_TOMATO: [
         0.90, 0, 0, 0, 2,
         0.90, 0, 0, 0, -0.20,
         -0.20, 0, 0, 0, -0.5,

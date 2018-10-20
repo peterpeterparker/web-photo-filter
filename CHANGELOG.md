@@ -1,3 +1,10 @@
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/fluster/web-photo-filter/compare/v2.1.0...v2.2.0) (2018-08-20)
+
+## Fixes
+
+* there was a typo in the filter's name "violen_tomato" fixed with "violen**t**_tomato" ([#7](https://github.com/fluster/web-photo-filter/issues/7))
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/fluster/web-photo-filter/compare/v2.0.0...v2.1.0) (2018-08-19)
 
