@@ -1,3 +1,10 @@
+<a name="2.1.1"></a>
+# [2.1.1](https://github.com/fluster/web-social-share/compare/v2.1.0...v2.1.1) (2018-08-23)
+
+### Fix
+
+* resolve build warning ([3443abb4276def0ed448e6042ce6b32bd912b815](https://github.com/fluster/web-photo-filter/commit/3443abb4276def0ed448e6042ce6b32bd912b815))
+
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/fluster/web-photo-filter/compare/v2.1.0...v2.2.0) (2018-08-20)
 
