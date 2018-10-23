@@ -13,15 +13,15 @@
     "web component",
     "stencil"
   ],
+  "module": "dist/esm/index.js",
   "main": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
     "dist/",
     "README.md",
     "LICENSE"
   ],
-  "module": "dist/esm/index.js",
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
