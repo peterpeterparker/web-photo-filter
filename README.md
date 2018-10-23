@@ -43,7 +43,7 @@ However, I was able to integrate the library as described below.
 
 After you install the library, please proceed with the following steps:
 
-1. Import the module into the component.module that you would like to use Web Photo Filter, and add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas.
+1. In the module where you would like to use the component, add `CUSTOM_ELEMENTS_SCHEMA` to your list of schemas.
 
         @NgModule({
             declarations: [
