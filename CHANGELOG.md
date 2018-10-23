@@ -1,5 +1,5 @@
 <a name="2.1.1"></a>
-# [2.1.1](https://github.com/fluster/web-social-share/compare/v2.1.0...v2.1.1) (2018-08-23)
+# [2.1.1](https://github.com/fluster/web-photo-filter/compare/v2.1.0...v2.1.1) (2018-08-23)
 
 ### Fix
 
