@@ -1,6 +1,7 @@
-import {Component, Element, Event, EventEmitter, Prop} from '@stencil/core';
+import {Component, Element, Event, EventEmitter, Prop, h} from '@stencil/core';
 
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
+import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
 
 @Component({
   tag: 'web-photo-filter',
@@ -19,9 +20,7 @@ export class WebPhotoFilterComponent {
 
   @Prop() keep: boolean = false;
 
-  // TODO: Issue https://github.com/ionic-team/stencil/issues/724
-  // Instead of generic, replace with EventEmitter<WebPhotoFilterResult> once issue solved
-  @Event() filterLoad: EventEmitter;
+  @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
 
   @Element() el: HTMLElement;
 
@@ -54,7 +53,7 @@ export class WebPhotoFilterComponent {
     attribute vec2 a_texCoord;
     uniform vec2 u_resolution;
     varying vec2 v_texCoord;
-  
+
     void main() {
        vec2 clipSpace = (a_position / u_resolution) * 2.0 - 1.0; // convert the rectangle from pixels to clipspace
        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
@@ -68,7 +67,7 @@ export class WebPhotoFilterComponent {
     uniform mat4 u_matrix;
     uniform vec4 u_multiplier;
     varying vec2 v_texCoord; // the texCoords passed from the vertex shader.
-  
+
     void main() {
       vec4 color = texture2D(u_image, v_texCoord);
       mat4 colMat = mat4(
