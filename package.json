@@ -17,7 +17,8 @@
   ],
   "scripts": {
     "build": "stencil build",
-    "start": "stencil build --dev --watch --serve"
+    "start": "stencil build --dev --watch --serve",
+    "web": "stencil build --prerender"
   },
   "dependencies": {},
   "devDependencies": {

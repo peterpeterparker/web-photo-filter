@@ -12,6 +12,7 @@ export const config: Config = {
     },
     {
       type: 'www',
+      baseUrl: 'http://webphotofilter.com',
       serviceWorker: null
     }
   ],
