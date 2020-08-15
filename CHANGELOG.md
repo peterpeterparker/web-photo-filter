@@ -1,27 +1,27 @@
 <a name="2.1.1"></a>
-# [2.1.1](https://github.com/fluster/web-photo-filter/compare/v2.1.0...v2.1.1) (2018-08-23)
+# [2.1.1](https://github.com/peterpeterparker/web-photo-filter/compare/v2.1.0...v2.1.1) (2018-08-23)
 
 ### Fix
 
-* resolve build warning ([3443abb4276def0ed448e6042ce6b32bd912b815](https://github.com/fluster/web-photo-filter/commit/3443abb4276def0ed448e6042ce6b32bd912b815))
+* resolve build warning ([3443abb4276def0ed448e6042ce6b32bd912b815](https://github.com/peterpeterparker/web-photo-filter/commit/3443abb4276def0ed448e6042ce6b32bd912b815))
 
 <a name="2.2.0"></a>
-# [2.2.0](https://github.com/fluster/web-photo-filter/compare/v2.1.0...v2.2.0) (2018-08-20)
+# [2.2.0](https://github.com/peterpeterparker/web-photo-filter/compare/v2.1.0...v2.2.0) (2018-08-20)
 
 ## Fixes
 
-* there was a typo in the filter's name "violen_tomato" fixed with "violen**t**_tomato" ([#7](https://github.com/fluster/web-photo-filter/issues/7))
+* there was a typo in the filter's name "violen_tomato" fixed with "violen**t**_tomato" ([#7](https://github.com/peterpeterparker/web-photo-filter/issues/7))
 
 <a name="2.1.0"></a>
-# [2.1.0](https://github.com/fluster/web-photo-filter/compare/v2.0.0...v2.1.0) (2018-08-19)
+# [2.1.0](https://github.com/peterpeterparker/web-photo-filter/compare/v2.0.0...v2.1.0) (2018-08-19)
 
 ### Libs
 
-* update Stencil ([#5](https://github.com/fluster/web-photo-filter/issues/5))
-* target ES2017 ([#6](https://github.com/fluster/web-photo-filter/issues/6))
+* update Stencil ([#5](https://github.com/peterpeterparker/web-photo-filter/issues/5))
+* target ES2017 ([#6](https://github.com/peterpeterparker/web-photo-filter/issues/6))
 
 <a name="2.0.0"></a>
-# [2.0.0](https://github.com/fluster/web-photo-filter/compare/v1.1.1...v2.0.0) (2018-08-12)
+# [2.0.0](https://github.com/peterpeterparker/web-photo-filter/compare/v1.1.1...v2.0.0) (2018-08-12)
 
 ## Features
 

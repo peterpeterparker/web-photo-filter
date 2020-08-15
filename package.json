@@ -43,12 +43,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fluster/web-photo-filter.git"
+    "url": "git+https://github.com/peterpeterparker/web-photo-filter.git"
   },
   "author": "David Dal Busco",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fluster/web-photo-filter"
+    "url": "https://github.com/peterpeterparker/web-photo-filter"
   },
   "homepage": "https://webphotofilter.com",
   "jest": {
