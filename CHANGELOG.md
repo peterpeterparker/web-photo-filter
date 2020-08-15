@@ -3,7 +3,10 @@
 
 ### Chore
 
-- update dependencies
+- update dependencies (Stencil v1.17.x)
+- add GitHub actions to deploy to Firebase
+- prerender the demo webapp 
+- repo move to my personal GitHub account
 
 <a name="2.2.1"></a>
 # [2.2.1](https://github.com/peterpeterparker/web-photo-filter/compare/v2.1.0...v2.1.1) (2018-08-23)
