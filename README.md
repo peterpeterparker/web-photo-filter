@@ -7,11 +7,11 @@ Web Photo Filter is a web component to apply Instagram-like WebGL filters to pho
 
 ## Goals
 
-The main goal of this component is to be implemented in the mobile application [Fluster](https://fluster.io) to let users enhance photos of their rooms and flats to make their listings more attractive. 
+This component was originally implemented for the deprecated mobile application [Fluster](https://github.com/fluster). It had for goal to let users enhance photos of their rooms and flats, to make their listings more attractive. 
 
 ### Image modification solutions and fast processing
 
-Other web based filter solutions use CSS (for example [Instagram.css](https://picturepan2.github.io/instagram.css/)) or Javascript to modify images.
+Others web based filter solutions use CSS (for example [Instagram.css](https://picturepan2.github.io/instagram.css/)) or Javascript to modify images.
 
 CSS solutions do not modify the underlying image, and <strong>only</strong> apply a visual layer to it. 
 
