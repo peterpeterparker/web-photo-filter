@@ -1,4 +1,6 @@
-# Web Photo Filter
+# Web Photo Filter learn from home 
+# learn with Peterpeterparker
+# help to improve your skills
 
 Web Photo Filter is a web component to apply Instagram-like WebGL filters to photos
 
