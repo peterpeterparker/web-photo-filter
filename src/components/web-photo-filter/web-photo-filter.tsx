@@ -5,10 +5,9 @@ import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filte
 
 @Component({
   tag: 'web-photo-filter',
-  styleUrl: 'web-photo-filter.scss'
+  styleUrl: 'web-photo-filter.scss',
 })
 export class WebPhotoFilterComponent {
-
   srcImgId: string;
   private canvasId: string;
 
@@ -30,7 +29,6 @@ export class WebPhotoFilterComponent {
   }
 
   private createWebGLProgram(ctx, vertexShaderSource, fragmentShaderSource) {
-
     let compileShader = (shaderSource, shaderType) => {
       let shader = ctx.createShader(shaderType);
       ctx.shaderSource(shader, shaderSource);
@@ -45,7 +43,6 @@ export class WebPhotoFilterComponent {
     ctx.useProgram(program);
 
     return program;
-
   }
 
   private vertexShaderSource = `
@@ -181,13 +178,24 @@ export class WebPhotoFilterComponent {
     let positionLocation = ctx.getAttribLocation(program, 'a_position');
     let buffer = ctx.createBuffer();
     ctx.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, buffer);
-    ctx.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array([
-      0, 0,
-      image.naturalWidth, 0,
-      0, image.naturalHeight,
-      0, image.naturalHeight,
-      image.naturalWidth, 0,
-      image.naturalWidth, image.naturalHeight]), WebGLRenderingContext.STATIC_DRAW);
+    ctx.bufferData(
+      WebGLRenderingContext.ARRAY_BUFFER,
+      new Float32Array([
+        0,
+        0,
+        image.naturalWidth,
+        0,
+        0,
+        image.naturalHeight,
+        0,
+        image.naturalHeight,
+        image.naturalWidth,
+        0,
+        image.naturalWidth,
+        image.naturalHeight,
+      ]),
+      WebGLRenderingContext.STATIC_DRAW
+    );
     ctx.enableVertexAttribArray(positionLocation);
     ctx.vertexAttribPointer(positionLocation, 2, WebGLRenderingContext.FLOAT, false, 0, 0);
 
@@ -195,13 +203,11 @@ export class WebPhotoFilterComponent {
     let texCoordLocation = ctx.getAttribLocation(program, 'a_texCoord');
     let texCoordBuffer = ctx.createBuffer();
     ctx.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, texCoordBuffer);
-    ctx.bufferData(WebGLRenderingContext.ARRAY_BUFFER, new Float32Array([
-      0.0, 0.0,
-      1.0, 0.0,
-      0.0, 1.0,
-      0.0, 1.0,
-      1.0, 0.0,
-      1.0, 1.0]), WebGLRenderingContext.STATIC_DRAW);
+    ctx.bufferData(
+      WebGLRenderingContext.ARRAY_BUFFER,
+      new Float32Array([0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0]),
+      WebGLRenderingContext.STATIC_DRAW
+    );
     ctx.enableVertexAttribArray(texCoordLocation);
     ctx.vertexAttribPointer(texCoordLocation, 2, WebGLRenderingContext.FLOAT, false, 0, 0);
 
@@ -214,7 +220,14 @@ export class WebPhotoFilterComponent {
     ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MIN_FILTER, WebGLRenderingContext.NEAREST);
     ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MAG_FILTER, WebGLRenderingContext.NEAREST);
     // Load the image into the texture.
-    ctx.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, image);
+    ctx.texImage2D(
+      WebGLRenderingContext.TEXTURE_2D,
+      0,
+      WebGLRenderingContext.RGBA,
+      WebGLRenderingContext.RGBA,
+      WebGLRenderingContext.UNSIGNED_BYTE,
+      image
+    );
 
     // Draw the rectangle.
     ctx.drawArrays(WebGLRenderingContext.TRIANGLES, 0, 6);
@@ -237,8 +250,6 @@ export class WebPhotoFilterComponent {
   }
 
   render() {
-    return (
-      <img id={this.srcImgId} src={this.src} alt={this.alt} onLoad={() => this.applyFilter()}></img>
-    );
+    return <img id={this.srcImgId} src={this.src} alt={this.alt} onLoad={() => this.applyFilter()}></img>;
   }
 }

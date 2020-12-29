@@ -27,7 +27,10 @@
     "@stencil/postcss": "^2.0.0",
     "@stencil/sass": "^1.4.1",
     "@types/jest": "^26.0.19",
-    "autoprefixer": "^10.1.0"
+    "autoprefixer": "^10.1.0",
+    "husky": "4.3.6",
+    "prettier": "2.2.1",
+    "pretty-quick": "3.1.0"
   },
   "repository": {
     "type": "git",
@@ -49,5 +52,10 @@
     "webgl",
     "web component",
     "stencil"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
 }

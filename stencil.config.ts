@@ -8,18 +8,18 @@ export const config: Config = {
   namespace: 'webphotofilter',
   outputTargets: [
     {
-      type: 'dist'
+      type: 'dist',
     },
     {
       type: 'www',
       baseUrl: 'http://webphotofilter.com',
-      serviceWorker: null
-    }
+      serviceWorker: null,
+    },
   ],
   plugins: [
     sass(),
     postcss({
-      plugins: [autoprefixer()]
-    })
-  ]
+      plugins: [autoprefixer()],
+    }),
+  ],
 };
