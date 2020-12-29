@@ -5,6 +5,15 @@ Web Photo Filter is a web component to apply Instagram-like WebGL filters to pho
 [![GitHub release](https://img.shields.io/github/release/peterpeterparker/web-photo-filter/all?logo=GitHub)](https://github.com/peterpeterparker/web-photo-filter/releases/latest)
 [![Tweet](https://img.shields.io/twitter/url?url=https%3A%2F%webphotofilter.com)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fwebphotofilter.com&text=A%20web%20component%20to%20apply%20Instagram-like%20WebGL%20filters%20to%20photos%20by%20%40daviddalbusco)
 
+## Table of contents
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+- [Credits](#credits)
+- [Limitation](#limitation)
+- [Tutorial](#tutorial)
+
 ## Introduction
 
 This component has for goal to make Instagram-like filters for photos accessible for the web.
@@ -35,6 +44,26 @@ This project is a web component built with the amazing [Stencil](https://stencil
 
 ```bash
 npm install web-photo-filter
+```
+
+### React
+
+You can use a [React specific wrapper](https://github.com/peterpeterparker/web-photo-filter-react) for this component.
+
+Install it as following:
+
+```bash
+npm install web-photo-filter-react
+```
+
+Consume it in your code:
+
+```javascript
+import {WebPhotoFilter} from 'web-photo-filter-react/dist';
+
+render() {
+    return <WebPhotoFilter/>
+}
 ```
 
 ## Getting Started
@@ -83,19 +112,13 @@ Some filters (brightness, saturation, contrast and hue) are variable. To modify 
 
 `level` is a **number** parameter
 
-## Showcase
-
-A showcase of all filters is available at [https://webphotofilter.com](https://webphotofilter.com)
-
-The above showcase is the `www` folder of this project deployed in Firebase. If you clone the repository you could run it locally using `npm run start`.
-
 ## Credits
 
 This web component would not had been possible without the brilliant [article](https://www.madebymike.com.au/writing/canvas-image-manipulation/) and WebGL core processing code written by [Mike Riethmuller](https://github.com/MadeByMike) :heart:
 
 The sources of nine filters (Brownie, Brightnes, etc.) were adapted from the project [WebGLImageFilter](https://github.com/phoboslab/WebGLImageFilter) by [Dominic Szablewski](http://phoboslab.org/) :+1:
 
-## Limitations
+## Limitation
 
 WebGL is well supported by most modern browsers, but there may be some use cases where it is not. In the case that WebGL is not supported, there is a fallback scenario implemented in the component.
 
