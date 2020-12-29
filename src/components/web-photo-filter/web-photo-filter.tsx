@@ -1,4 +1,4 @@
-import {Component, Element, Event, EventEmitter, Prop, h} from '@stencil/core';
+import {Component, Event, EventEmitter, Prop, h, Fragment, State} from '@stencil/core';
 
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
 import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
@@ -17,9 +17,11 @@ export class WebPhotoFilterComponent {
 
   @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
 
-  @Element() el: HTMLElement;
+  @State()
+  private canvasDisplay: 'none' | 'block' = 'none';
 
   private imgRef!: HTMLImageElement;
+  private canvasRef!: HTMLCanvasElement;
 
   private createWebGLProgram(ctx, vertexShaderSource, fragmentShaderSource) {
     const compileShader = (shaderSource, shaderType) => {
@@ -97,28 +99,21 @@ export class WebPhotoFilterComponent {
     this.filterLoad.emit({webGLDetected: webGlState, result: result});
   }
 
-  private createCanvas(): HTMLCanvasElement {
-    let canvas: HTMLCanvasElement = document.createElement('canvas');
-
-    canvas.width = this.imgRef.naturalWidth;
-    canvas.height = this.imgRef.naturalHeight;
-    canvas.setAttribute('part', 'canvas');
-
-    this.imgRef.parentNode.insertBefore(canvas, this.imgRef);
-
-    return canvas;
+  private updateCanvasSize() {
+    this.canvasRef.width = this.imgRef?.naturalWidth;
+    this.canvasRef.height = this.imgRef?.naturalHeight;
   }
 
   private desaturateImage(feColorMatrix: number[]) {
-    let canvas: HTMLCanvasElement = this.el.querySelector('canvas');
-
-    if (!canvas) {
-      canvas = this.createCanvas();
+    if (!this.canvasRef) {
+      return;
     }
+
+    this.updateCanvasSize();
 
     let ctx: WebGLRenderingContext;
     try {
-      ctx = canvas.getContext('webgl', {preserveDrawingBuffer: true});
+      ctx = this.canvasRef.getContext('webgl', {preserveDrawingBuffer: true});
     } catch (e) {
       // In case we couldn't instantiate WebGL, do nothing
       this.emitFilterApplied(this.imgRef, false);
@@ -135,7 +130,7 @@ export class WebPhotoFilterComponent {
 
     // Expose canvas width and height to shader via u_resolution
     let resolutionLocation = ctx.getUniformLocation(program, 'u_resolution');
-    ctx.uniform2f(resolutionLocation, canvas.width, canvas.height);
+    ctx.uniform2f(resolutionLocation, this.canvasRef.width, this.canvasRef.height);
 
     // Modify the feColorMatrix to fit better with available shader datatypes by putting the multiplier in a separate vector
 
@@ -214,8 +209,10 @@ export class WebPhotoFilterComponent {
     // Draw the rectangle.
     ctx.drawArrays(WebGLRenderingContext.TRIANGLES, 0, 6);
 
+    this.canvasDisplay = 'block';
+
     // The filter was applied, we emit the canvas not the source image
-    this.emitFilterApplied(canvas, true);
+    this.emitFilterApplied(this.canvasRef, true);
   }
 
   private hasValidWegGLContext(): boolean {
@@ -233,12 +230,16 @@ export class WebPhotoFilterComponent {
 
   render() {
     return (
-      <img
-        ref={(el) => (this.imgRef = el as HTMLImageElement)}
-        part="img"
-        src={this.src}
-        alt={this.alt}
-        onLoad={() => this.applyFilter()}></img>
+      <Fragment>
+        <canvas ref={(el) => (this.canvasRef = el as HTMLCanvasElement)} part="canvas" style={{display: this.canvasDisplay}}></canvas>
+
+        <img
+          ref={(el) => (this.imgRef = el as HTMLImageElement)}
+          part="img"
+          src={this.src}
+          alt={this.alt}
+          onLoad={() => this.applyFilter()}></img>
+      </Fragment>
     );
   }
 }
