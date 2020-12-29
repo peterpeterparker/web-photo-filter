@@ -73,30 +73,6 @@
   </head>
   <body>
     <header>
-      <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-8 col-md-7 py-4">
-              <h4 class="text-white">About</h4>
-              <p class="text-muted">
-                This component was originally implemented for the deprecated mobile application
-                <a href="https://github.com/fluster" class="text-white">Fluster</a>. It had for goal to let users enhance photos of their
-                rooms and flats, to make their listings more attractive. This web component is published on
-                <a href="https://github.com/peterpeterparker/web-photo-filter" class="text-white">Github</a> under license MIT ©
-                <a href="mailto:david.dalbusco@outlook.com" class="text-white">David Dal Busco</a>
-              </p>
-            </div>
-            <div class="col-sm-4 offset-md-1 py-4">
-              <h4 class="text-white">Contact</h4>
-              <ul class="list-unstyled">
-                <li><a href="https://github.com/peterpeterparker/web-photo-filter" class="text-white">Github</a></li>
-                <li><a href="http://twitter.com/daviddalbusco" class="text-white">Twitter</a></li>
-                <li><a href="mailto:david.dalbusco@outlook.com" class="text-white">Email me</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex justify-content-between">
           <a href="#" class="navbar-brand d-flex align-items-center">
@@ -117,17 +93,6 @@
             </svg>
             <strong>Web Photo Filter</strong>
           </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarHeader"
-            aria-controls="navbarHeader"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
         </div>
       </div>
     </header>
@@ -136,10 +101,7 @@
       <section class="jumbotron text-center">
         <div class="container">
           <h1 class="jumbotron-heading">Web Photo Filter</h1>
-          <p class="lead text-muted">
-            Web Photo Filter is a web component to apply Instagram-like WebGL filters to photos. The component could be integrated in the
-            most popular frontend frameworks
-          </p>
+          <p class="lead text-muted">A web component to apply Instagram-like WebGL filters to photos.</p>
           <iframe
             width="560"
             height="315"
@@ -148,12 +110,15 @@
             allow="encrypted-media"
             allowfullscreen
           ></iframe>
-          <p>
-            <samp>Demo of the integration in the mobile app <a href="https://fluster.io" class="text-secondary">Fluster</a></samp>
-          </p>
-          <p>
+          <p class="my-4">
             <a href="https://github.com/peterpeterparker/web-photo-filter" class="btn btn-dark my-2"
               ><i class="fab fa-github"></i> Github</a
+            >
+
+            <a
+              href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwebphotofilter.com&text=A%20web%20component%20to%20apply%20Instagram-like%20WebGL%20filters%20to%20photos%20by%20%40daviddalbusco"
+              class="btn btn-primary mx-2 my-2"
+              ><i class="fab fa-twitter"></i> Tweet</a
             >
           </p>
         </div>
@@ -161,7 +126,7 @@
 
       <!-- Showcase -->
 
-      <div class="album py-5 bg-light">
+      <div class="album py-4 bg-light">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
@@ -539,10 +504,7 @@
 
     <footer class="text-muted">
       <div class="container">
-        <p class="float-right">
-          <a href="#">Back to top</a>
-        </p>
-        <p>License MIT &copy; <a href="mailto:david.dalbusco@outlook.com">David Dal Busco</a></p>
+        <p>Made by <a href="https://daviddalbusco.com">David Dal Busco</a></p>
       </div>
     </footer>
 
@@ -572,9 +534,9 @@
     <!-- Display a warning if WebGL is not supported -->
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function (event) {
-        var canvas = document.createElement('canvas');
+        const canvas = document.createElement('canvas');
 
-        var ctx;
+        let ctx;
         try {
           ctx = canvas.getContext('webgl');
         } catch (e) {
@@ -582,14 +544,14 @@
         }
 
         if (!ctx || !(ctx instanceof WebGLRenderingContext)) {
-          var noWebGLMsg = document.createElement('div');
+          const noWebGLMsg = document.createElement('div');
           noWebGLMsg.classList = new Array();
           noWebGLMsg.classList.add('alert-danger');
           noWebGLMsg.classList.add('text-center');
           noWebGLMsg.classList.add('mb-3');
           noWebGLMsg.textContent = 'WebGL is not supported by your current browser!';
 
-          var rowShowcase = document.getElementsByClassName('col-md-12');
+          const rowShowcase = document.getElementsByClassName('col-md-12');
 
           if (rowShowcase && rowShowcase.length == 1) {
             rowShowcase[0].appendChild(noWebGLMsg);
