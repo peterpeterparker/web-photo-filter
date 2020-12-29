@@ -1,9 +1,7 @@
-web-photo-filter {
-  img {
-    display: none;
+img {
+  display: none;
 
-    &.display-no-filter {
-      display: block;
-    }
+  &.display-no-filter {
+    display: block;
   }
 }

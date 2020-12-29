@@ -6,30 +6,23 @@ import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filte
 @Component({
   tag: 'web-photo-filter',
   styleUrl: 'web-photo-filter.scss',
+  shadow: true,
 })
 export class WebPhotoFilterComponent {
-  srcImgId: string;
-  private canvasId: string;
-
   @Prop() src: string;
   @Prop() alt: string;
 
   @Prop() filter: string;
   @Prop() level: number;
 
-  @Prop() keep: boolean = false;
-
   @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
 
   @Element() el: HTMLElement;
 
-  componentWillLoad() {
-    this.srcImgId = 'webPhotoFilterImg' + Date.now();
-    this.canvasId = 'webPhotoFilterCanvas' + Date.now();
-  }
+  private imgRef!: HTMLImageElement;
 
   private createWebGLProgram(ctx, vertexShaderSource, fragmentShaderSource) {
-    let compileShader = (shaderSource, shaderType) => {
+    const compileShader = (shaderSource, shaderType) => {
       let shader = ctx.createShader(shaderType);
       ctx.shaderSource(shader, shaderSource);
       ctx.compileShader(shader);
@@ -45,7 +38,7 @@ export class WebPhotoFilterComponent {
     return program;
   }
 
-  private vertexShaderSource = `
+  private readonly vertexShaderSource = `
     attribute vec2 a_position;
     attribute vec2 a_texCoord;
     uniform vec2 u_resolution;
@@ -58,7 +51,7 @@ export class WebPhotoFilterComponent {
     }
   `;
 
-  private fragmentShaderSource = `
+  private readonly fragmentShaderSource = `
     precision mediump float;
     uniform sampler2D u_image; // the texture
     uniform mat4 u_matrix;
@@ -87,51 +80,40 @@ export class WebPhotoFilterComponent {
   }
 
   private applyFilter() {
-    const image: HTMLImageElement = this.el.querySelector('img#' + this.srcImgId);
-
-    if (image == null) {
-      return;
-    }
-
     let matrix: number[] = WebPhotoFilterType.getFilter(this.filter, this.level);
 
     if (matrix === null) {
       // We consider null as NO_FILTER, in that case the img will be emitted
       // Furthermore, we explicity displays it
-      image.classList.add('display-no-filter');
-      this.emitFilterApplied(image, this.hasValidWegGLContext());
+      this.imgRef?.classList.add('display-no-filter');
+      this.emitFilterApplied(this.imgRef, this.hasValidWegGLContext());
       return;
     }
 
-    this.desaturateImage(image, matrix);
+    this.desaturateImage(matrix);
   }
 
   private emitFilterApplied(result: HTMLElement, webGlState: boolean) {
     this.filterLoad.emit({webGLDetected: webGlState, result: result});
   }
 
-  private createCanvas(image: HTMLImageElement): HTMLCanvasElement {
+  private createCanvas(): HTMLCanvasElement {
     let canvas: HTMLCanvasElement = document.createElement('canvas');
 
-    canvas.id = this.canvasId;
-    canvas.width = image.naturalWidth;
-    canvas.height = image.naturalHeight;
+    canvas.width = this.imgRef.naturalWidth;
+    canvas.height = this.imgRef.naturalHeight;
+    canvas.setAttribute('part', 'canvas');
 
-    image.parentNode.insertBefore(canvas, image);
+    this.imgRef.parentNode.insertBefore(canvas, this.imgRef);
 
     return canvas;
   }
 
-  private desaturateImage(image: HTMLImageElement, feColorMatrix: number[]) {
-    let canvas: HTMLCanvasElement = this.el.querySelector('canvas#' + this.canvasId);
+  private desaturateImage(feColorMatrix: number[]) {
+    let canvas: HTMLCanvasElement = this.el.querySelector('canvas');
 
     if (!canvas) {
-      canvas = this.createCanvas(image);
-    }
-
-    if (!this.keep) {
-      // There might be also cases where it's handy to keep a non displayed version of the image in the dom
-      image.parentNode.removeChild(image);
+      canvas = this.createCanvas();
     }
 
     let ctx: WebGLRenderingContext;
@@ -139,13 +121,13 @@ export class WebPhotoFilterComponent {
       ctx = canvas.getContext('webgl', {preserveDrawingBuffer: true});
     } catch (e) {
       // In case we couldn't instantiate WebGL, do nothing
-      this.emitFilterApplied(image, false);
+      this.emitFilterApplied(this.imgRef, false);
       return;
     }
 
     if (!ctx) {
       // WebGL not supported. A fallback could be 2D methods, but that would not be performing
-      this.emitFilterApplied(image, false);
+      this.emitFilterApplied(this.imgRef, false);
       return;
     }
 
@@ -183,16 +165,16 @@ export class WebPhotoFilterComponent {
       new Float32Array([
         0,
         0,
-        image.naturalWidth,
+        this.imgRef.naturalWidth,
         0,
         0,
-        image.naturalHeight,
+        this.imgRef.naturalHeight,
         0,
-        image.naturalHeight,
-        image.naturalWidth,
+        this.imgRef.naturalHeight,
+        this.imgRef.naturalWidth,
         0,
-        image.naturalWidth,
-        image.naturalHeight,
+        this.imgRef.naturalWidth,
+        this.imgRef.naturalHeight,
       ]),
       WebGLRenderingContext.STATIC_DRAW
     );
@@ -226,7 +208,7 @@ export class WebPhotoFilterComponent {
       WebGLRenderingContext.RGBA,
       WebGLRenderingContext.RGBA,
       WebGLRenderingContext.UNSIGNED_BYTE,
-      image
+      this.imgRef
     );
 
     // Draw the rectangle.
@@ -250,6 +232,13 @@ export class WebPhotoFilterComponent {
   }
 
   render() {
-    return <img id={this.srcImgId} src={this.src} alt={this.alt} onLoad={() => this.applyFilter()}></img>;
+    return (
+      <img
+        ref={(el) => (this.imgRef = el as HTMLImageElement)}
+        part="img"
+        src={this.src}
+        alt={this.alt}
+        onLoad={() => this.applyFilter()}></img>
+    );
   }
 }

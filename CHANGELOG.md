@@ -5,10 +5,13 @@
 ### Breaking changes
 
 - drop support of IE11, Edge 16-18 and Safari 10
+- component is now `shadowed` and therefore is a proper Web Components
+- feature `keep` removed
 
 ### Features
 
 - update dependencies (Stencil v2)
+- component exposes two parts, `img` and `canvas`, for styling purpose
 
 ### Chore
 

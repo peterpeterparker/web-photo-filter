@@ -157,7 +157,7 @@ export class WebPhotoFilterType {
     ];
   }
 
-  private static saturationMatrix(amount: number): any {
+  private static saturationMatrix(amount: number): number[] {
     let x: number = ((amount || 0) * 2) / 3 + 1;
     let y: number = (x - 1) * -0.5;
     return [x, y, y, 0, 0, y, x, y, 0, 0, y, y, x, 0, 0, 0, 0, 0, 1, 0];
