@@ -13,6 +13,7 @@
 
 - update dependencies (Stencil v2)
 - component exposes two parts, `img` and `canvas`, for styling purpose
+- supports image from `https` (source image `crossorigin` set to `anonymous`) ([#14](https://github.com/peterpeterparker/web-photo-filter/issues/14))
 
 ### Chore
 

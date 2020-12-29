@@ -268,14 +268,20 @@ export class WebPhotoFilterComponent {
           role="img"
           aria-hidden={true}></canvas>
 
-        <img
-          ref={(el) => (this.imgRef = el as HTMLImageElement)}
-          part="img"
-          src={this.src}
-          role="img"
-          aria-hidden={true}
-          onLoad={() => this.applyFilter()}></img>
+        {this.renderImage()}
       </Fragment>
     );
+  }
+
+  private renderImage() {
+    // prettier-ignore
+    // @ts-ignore
+    return <img crossOrigin={'anonymous'}
+      ref={(el) => (this.imgRef = el as HTMLImageElement)}
+      part="img"
+      src={this.src}
+      role="img"
+      aria-hidden={true}
+      onLoad={() => this.applyFilter()}></img>
   }
 }

@@ -45,9 +45,7 @@ The Web Photo Filter Component can be use as following:
 <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
 ```
 
-The only required parameter is the img `src` tag.
-
-Note: Currently, the component does not support URL based images such as `https://url.com/myimage.jpg`
+The only required parameter is the img `src` tag. It also supports images provided as `https` if the `anonymous` [crossorigin](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) can be use.
 
 ### Filter
 
