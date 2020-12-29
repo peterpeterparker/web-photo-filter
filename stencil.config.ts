@@ -15,6 +15,7 @@ export const config: Config = {
       baseUrl: 'http://webphotofilter.com',
       serviceWorker: null,
     },
+    {type: 'docs-readme'},
   ],
   plugins: [
     sass(),

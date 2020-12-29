@@ -7,6 +7,7 @@
 - drop support of IE11, Edge 16-18 and Safari 10
 - component is now `shadowed` and therefore is a proper Web Components
 - feature `keep` removed
+- both shadowed image and canvas role set as `img` and to `aria-hidden`. for a11y, provide information on the host component.
 
 ### Features
 

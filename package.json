@@ -17,7 +17,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build --docs",
     "start": "stencil build --dev --watch --serve",
     "web": "stencil build "
   },

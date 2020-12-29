@@ -3,18 +3,48 @@ import {Component, Event, EventEmitter, Prop, h, Fragment, State} from '@stencil
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
 import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
 
+/**
+ * @part img - The part attribute to access the source image
+ * @part canvas - The part attribute to access the resulting filtered canvas
+ */
 @Component({
   tag: 'web-photo-filter',
   styleUrl: 'web-photo-filter.scss',
   shadow: true,
 })
 export class WebPhotoFilterComponent {
+  /**
+   * The source of the image.
+   */
   @Prop() src: string;
-  @Prop() alt: string;
 
-  @Prop() filter: string;
+  /**
+   * The filter to apply on the source image.
+   */
+  @Prop() filter:
+    | 'sepia'
+    | 'blue_monotone'
+    | 'violent_tomato'
+    | 'greyscale'
+    | 'brightness'
+    | 'saturation'
+    | 'contrast'
+    | 'hue'
+    | 'cookie'
+    | 'vintage'
+    | 'koda'
+    | 'technicolor'
+    | 'polaroid'
+    | 'bgr';
+
+  /**
+   * An optional level to apply the filter.
+   */
   @Prop() level: number;
 
+  /**
+   * An event emitted each times a filter is applied. It provides information about the webgl context (is is supported?) and emit either the image, if filter can not be applied, or the resulting canvas.
+   */
   @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
 
   @State()
@@ -231,13 +261,19 @@ export class WebPhotoFilterComponent {
   render() {
     return (
       <Fragment>
-        <canvas ref={(el) => (this.canvasRef = el as HTMLCanvasElement)} part="canvas" style={{display: this.canvasDisplay}}></canvas>
+        <canvas
+          ref={(el) => (this.canvasRef = el as HTMLCanvasElement)}
+          part="canvas"
+          style={{display: this.canvasDisplay}}
+          role="img"
+          aria-hidden={true}></canvas>
 
         <img
           ref={(el) => (this.imgRef = el as HTMLImageElement)}
           part="img"
           src={this.src}
-          alt={this.alt}
+          role="img"
+          aria-hidden={true}
           onLoad={() => this.applyFilter()}></img>
       </Fragment>
     );
