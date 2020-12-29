@@ -3,7 +3,6 @@
 Web Photo Filter is a web component to apply Instagram-like WebGL filters to photos.
 
 [![GitHub release](https://img.shields.io/github/release/peterpeterparker/web-photo-filter/all?logo=GitHub)](https://github.com/peterpeterparker/web-photo-filter/releases/latest)
-![Demo](https://img.shields.io/website?label=Demo&url=https%3A%2F%2Fwebphotofilter.com)
 [![Tweet](https://img.shields.io/twitter/url?url=https%3A%2F%webphotofilter.com)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fwebphotofilter.com&text=A%20web%20component%20to%20apply%20Instagram-like%20WebGL%20filters%20to%20photos)
 
 ## Introduction
