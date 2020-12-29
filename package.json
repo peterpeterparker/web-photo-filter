@@ -1,15 +1,16 @@
 {
   "name": "web-photo-filter",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "A web component to apply Instagram-like WebGL filters to photos",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "es2015": "dist/esm/index.mjs",
-  "es2017": "dist/esm/index.mjs",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.js",
+  "es2017": "dist/esm/index.js",
+  "jsnext:main": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/deckdeckgo/deckdeckgo.js",
+  "unpkg": "dist/webphotofilter/webphotofilter.esm.js",
   "files": [
     "dist/",
     "README.md",
@@ -18,16 +19,15 @@
   "scripts": {
     "build": "stencil build",
     "start": "stencil build --dev --watch --serve",
-    "web": "stencil build"
+    "web": "stencil build "
   },
   "dependencies": {},
   "devDependencies": {
-    "@stencil/core": "^1.17.3",
-    "@stencil/postcss": "^1.0.1",
-    "@stencil/sass": "^1.3.2",
-    "@stencil/utils": "latest",
-    "@types/jest": "^26.0.10",
-    "autoprefixer": "^9.8.6"
+    "@stencil/core": "^2.3.0",
+    "@stencil/postcss": "^2.0.0",
+    "@stencil/sass": "^1.4.1",
+    "@types/jest": "^26.0.19",
+    "autoprefixer": "^10.1.0"
   },
   "repository": {
     "type": "git",

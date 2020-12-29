@@ -1,3 +1,14 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/peterpeterparker/web-photo-filter/compare/v2.3.0...v3.0.0) (2020-12-29)
+
+### Breaking changes
+
+- drop support of IE11, Edge 16-18 and Safari 10
+
+### Features
+
+- update dependencies (Stencil v2)
+
 <a name="2.3.0"></a>
 # [2.3.0](https://github.com/peterpeterparker/web-photo-filter/compare/v2.1.1...v2.2.0) (2020-08-15)
 
