@@ -9,7 +9,7 @@ Web Photo Filter is a web component to apply Instagram-like WebGL filters to pho
 
 - [Introduction](#introduction)
 - [Installation](#installation)
-- [Getting Started](#getting-started)
+- [Usage](#usage)
 - [Credits](#credits)
 - [Limitation](#limitation)
 - [Tutorial](#tutorial)
@@ -66,7 +66,7 @@ render() {
 }
 ```
 
-## Getting Started
+## Usage
 
 The Web Photo Filter Component can be use as following:
 
