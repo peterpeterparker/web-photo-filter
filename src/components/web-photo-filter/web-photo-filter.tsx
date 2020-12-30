@@ -1,4 +1,4 @@
-import {Component, Event, EventEmitter, Prop, h, Fragment, State} from '@stencil/core';
+import {Component, Event, EventEmitter, Prop, h, Fragment, State, Watch} from '@stencil/core';
 
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
 import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
@@ -24,7 +24,7 @@ export class WebPhotoFilterComponent {
   @Prop() filter: string;
 
   /**
-   * An optional level to apply the filter.
+   * An optional level to apply the filter. If multiple filter are provided, it applies to all except if a specific level is provided for a filter, such as saturation(1.1)
    */
   @Prop() level: number;
 
@@ -94,15 +94,28 @@ export class WebPhotoFilterComponent {
     }
   `;
 
-  componentWillUpdate() {
+  @Watch('filter')
+  onFilterChange() {
     this.applyFilter();
   }
 
-  private applyFilter() {
+  @Watch('src')
+  onSrcChange() {
+    this.applyFilter();
+  }
+
+  applyFilter() {
     const filterList: string[] = this.filter?.split(',');
 
     const matrix: number[][] = filterList
-      ?.map((filter: string) => WebPhotoFilterType.getFilter(filter?.trim(), this.level))
+      ?.map((filter: string) => {
+        const extractLevel = /\((.*)\)/;
+        const matches = extractLevel.exec(filter);
+
+        const level: number | undefined = matches && matches.length >= 1 ? parseFloat(matches[1]) : this.level;
+
+        return WebPhotoFilterType.getFilter(filter?.replace(/\((.*)\)/, '')?.trim(), level);
+      })
       ?.filter((matrix: number[] | null) => matrix !== null);
 
     if (matrix === undefined) {

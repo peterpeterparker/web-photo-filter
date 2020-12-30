@@ -13,7 +13,7 @@ export namespace Components {
          */
         "filter": string;
         /**
-          * An optional level to apply the filter.
+          * An optional level to apply the filter. If multiple filter are provided, it applies to all except if a specific level is provided for a filter, such as saturation(1.1)
          */
         "level": number;
         /**
@@ -40,7 +40,7 @@ declare namespace LocalJSX {
          */
         "filter"?: string;
         /**
-          * An optional level to apply the filter.
+          * An optional level to apply the filter. If multiple filter are provided, it applies to all except if a specific level is provided for a filter, such as saturation(1.1)
          */
         "level"?: number;
         /**
