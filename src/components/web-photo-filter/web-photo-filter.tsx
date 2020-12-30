@@ -126,6 +126,9 @@ export class WebPhotoFilterComponent {
       return;
     }
 
+    // In case the filter is applied after having displayed no filter
+    this.imgRef?.classList.remove('display-no-filter');
+
     this.desaturateImage(matrix);
   }
 
