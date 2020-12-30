@@ -126,11 +126,36 @@
 
       <!-- Showcase -->
 
+      <section class="text-center" style="margin-bottom: 64px">
+        <div class="container">
+          <h2 class="text-center mb-4">Showcase</h2>
+
+          <div class="row" style="display: flex; justify-content: center; flex-direction: column; align-items: center">
+            <div class="form-group" style="max-width: 508px; width: 100%; display: flex">
+              <input type="text" class="form-control" id="filters" value="technicolor, saturation(1.6), contrast" />
+              <button type="button" id="test" class="btn btn-secondary ml-2" onclick="applyShowcase()">Apply</button>
+            </div>
+
+            <div class="card box-shadow" style="max-width: 508px">
+              <div class="card-top">
+                <web-photo-filter
+                  style="display: block"
+                  id="showcase"
+                  src="https://raw.githubusercontent.com/peterpeterparker/web-photo-filter/master/assets/demo/instagram.jpg"
+                ></web-photo-filter>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter -->
+
       <div class="album py-4 bg-light">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <h2 class="text-center mb-4">Showcase</h2>
+              <h2 class="text-center mb-4">Filter</h2>
             </div>
 
             <div class="col-md-3">
@@ -245,6 +270,30 @@
                   <p class="card-text">Grey</p>
                   <p class="collapse card-text" id="demo-greyscale">
                     <code> &lt;web-photo-filter src="./instagram.jpg" filter="greyscale"&gt;&lt;/web-photo-filter&gt; </code>
+                  </p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" data-toggle="collapse" data-target="#demo-greyscale" class="btn btn-sm btn-outline-primary">
+                        View code
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card mb-3 box-shadow">
+                <div class="card-top">
+                  <web-photo-filter
+                    src="https://raw.githubusercontent.com/peterpeterparker/web-photo-filter/master/assets/demo/instagram.jpg"
+                    filter="desaturate"
+                  ></web-photo-filter>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">Desaturate</p>
+                  <p class="collapse card-text" id="demo-desaturate">
+                    <code> &lt;web-photo-filter src="./instagram.jpg" filter="desaturate"&gt;&lt;/web-photo-filter&gt; </code>
                   </p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
@@ -533,7 +582,7 @@
 
     <!-- Display a warning if WebGL is not supported -->
     <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', function (event) {
+      document.addEventListener('DOMContentLoaded', function ($event) {
         const canvas = document.createElement('canvas');
 
         let ctx;
@@ -558,8 +607,17 @@
           } else {
             console.log('WebGL is not supported by your current browser!');
           }
+        } else {
+          applyShowcase();
         }
       });
+
+      function applyShowcase() {
+        const filters = document.querySelector('#filters').value;
+        const showcase = document.querySelector('#showcase');
+
+        showcase.filter = filters;
+      }
     </script>
   </body>
 </html>

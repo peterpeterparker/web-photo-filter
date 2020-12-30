@@ -80,7 +80,9 @@ The only required parameter is the img `src` tag. It also supports images provid
 
 Filter is an optional parameter. Omitting this attribute or specifying a null value will result in no processing within the component. The source image will be displayed unmodified.
 
-The list of available filters is available in class `src/types/web-photo-filter-type.ts`
+The list of available filters is available in class `src/types/web-photo-filter-type.ts`. Currently: `sepia`, `blue_monotone`, `violent_tomato`, `greyscale`, `desaturate`, `brightness`, `saturation`, `contrast`, `hue`, `cookie`, `vintage`, `koda`, `technicolor`, `polaroid`, `bgr`.
+
+You can provide a unique filter or, a comma separated list of multiple filters.
 
 `filter` is a **string** parameter
 
@@ -88,6 +90,12 @@ The list of available filters is available in class `src/types/web-photo-filter-
 
 ```html
 <web-photo-filter src="assets/img/test.jpg" filter="sepia"></web-photo-filter>
+```
+
+#### Example: Multiple filters
+
+```html
+<web-photo-filter src="assets/img/test.jpg" filter="technicolor, saturation(1.6), contrast"></web-photo-filter>
 ```
 
 ### FilterLoad
@@ -105,6 +113,8 @@ The description of the event is available in the interface `src/types/web-photo-
 ### Level
 
 Some filters (brightness, saturation, contrast and hue) are variable. To modify their default values, you could use the variable `level`.
+
+If multiple filter are provided, it applies to all except if a specific level is provided for a filter, such as for example `saturation(1.1)`.
 
 ```html
 <web-photo-filter src="assets/img/test.jpg" filter="brightness" level="1.2"></web-photo-filter>

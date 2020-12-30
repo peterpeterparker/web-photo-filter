@@ -1,4 +1,4 @@
-import {Component, Event, EventEmitter, Prop, h, Fragment, State} from '@stencil/core';
+import {Component, Event, EventEmitter, Prop, h, Fragment, State, Watch} from '@stencil/core';
 
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
 import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
@@ -19,26 +19,12 @@ export class WebPhotoFilterComponent {
   @Prop() src: string;
 
   /**
-   * The filter to apply on the source image.
+   * A comma separated list of filter to apply on the source image. If no filter is provided, the source image as it will be displayed. Current filter are supported: 'sepia', 'blue_monotone', 'violent_tomato', 'greyscale', 'desaturate', 'brightness', 'saturation', 'contrast', 'hue', 'cookie', 'vintage', 'koda', 'technicolor', 'polaroid', 'bgr'.
    */
-  @Prop() filter:
-    | 'sepia'
-    | 'blue_monotone'
-    | 'violent_tomato'
-    | 'greyscale'
-    | 'brightness'
-    | 'saturation'
-    | 'contrast'
-    | 'hue'
-    | 'cookie'
-    | 'vintage'
-    | 'koda'
-    | 'technicolor'
-    | 'polaroid'
-    | 'bgr';
+  @Prop() filter: string;
 
   /**
-   * An optional level to apply the filter.
+   * An optional level to apply the filter. If multiple filter are provided, it applies to all except if a specific level is provided for a filter, such as saturation(1.1)
    */
   @Prop() level: number;
 
@@ -75,10 +61,11 @@ export class WebPhotoFilterComponent {
     attribute vec2 a_texCoord;
     uniform vec2 u_resolution;
     varying vec2 v_texCoord;
+    uniform float flipY;
 
     void main() {
        vec2 clipSpace = (a_position / u_resolution) * 2.0 - 1.0; // convert the rectangle from pixels to clipspace
-       gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+       gl_Position = vec4(clipSpace * vec2(1, flipY), 0, 1);
        v_texCoord = a_texCoord; // pass the texCoord to the fragment shader
     }
   `;
@@ -107,20 +94,40 @@ export class WebPhotoFilterComponent {
     }
   `;
 
-  componentWillUpdate() {
+  @Watch('filter')
+  onFilterChange() {
     this.applyFilter();
   }
 
-  private applyFilter() {
-    let matrix: number[] = WebPhotoFilterType.getFilter(this.filter, this.level);
+  @Watch('src')
+  onSrcChange() {
+    this.applyFilter();
+  }
 
-    if (matrix === null) {
+  applyFilter() {
+    const filterList: string[] = this.filter?.split(',');
+
+    const matrix: number[][] = filterList
+      ?.map((filter: string) => {
+        const extractLevel = /\((.*)\)/;
+        const matches = extractLevel.exec(filter);
+
+        const level: number | undefined = matches && matches.length >= 1 ? parseFloat(matches[1]) : this.level;
+
+        return WebPhotoFilterType.getFilter(filter?.replace(/\((.*)\)/, '')?.trim(), level);
+      })
+      ?.filter((matrix: number[] | null) => matrix !== null);
+
+    if (matrix === undefined) {
       // We consider null as NO_FILTER, in that case the img will be emitted
       // Furthermore, we explicity displays it
       this.imgRef?.classList.add('display-no-filter');
       this.emitFilterApplied(this.imgRef, this.hasValidWegGLContext());
       return;
     }
+
+    // In case the filter is applied after having displayed no filter
+    this.imgRef?.classList.remove('display-no-filter');
 
     this.desaturateImage(matrix);
   }
@@ -134,7 +141,7 @@ export class WebPhotoFilterComponent {
     this.canvasRef.height = this.imgRef?.naturalHeight;
   }
 
-  private desaturateImage(feColorMatrix: number[]) {
+  private desaturateImage(matrix: number[][]) {
     if (!this.canvasRef) {
       return;
     }
@@ -156,34 +163,70 @@ export class WebPhotoFilterComponent {
       return;
     }
 
-    let program = this.createWebGLProgram(ctx, this.vertexShaderSource, this.fragmentShaderSource);
+    // Create a texture.
+    const texture = this.createRootTexture(ctx);
+
+    const steps = matrix.map(() => this.createFramebufferTexture(ctx));
+
+    matrix.forEach((mat: number[], index: number) => {
+      this.applyMatrix(ctx, mat, index < matrix.length - 1 ? steps[index].target : null, index > 0 ? steps[index - 1].source : texture);
+    });
+
+    this.canvasDisplay = 'block';
+
+    // The filter was applied, we emit the canvas not the source image
+    this.emitFilterApplied(this.canvasRef, true);
+  }
+
+  private createRootTexture(ctx: WebGLRenderingContext): WebGLTexture {
+    const texture: WebGLTexture = ctx.createTexture();
+    ctx.bindTexture(WebGLRenderingContext.TEXTURE_2D, texture);
+    // Set the parameters so we can render any size image.
+    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_S, WebGLRenderingContext.CLAMP_TO_EDGE);
+    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_T, WebGLRenderingContext.CLAMP_TO_EDGE);
+    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MIN_FILTER, WebGLRenderingContext.NEAREST);
+    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MAG_FILTER, WebGLRenderingContext.NEAREST);
+    // Load the image into the texture.
+    ctx.texImage2D(
+      WebGLRenderingContext.TEXTURE_2D,
+      0,
+      WebGLRenderingContext.RGBA,
+      WebGLRenderingContext.RGBA,
+      WebGLRenderingContext.UNSIGNED_BYTE,
+      this.imgRef
+    );
+    return texture;
+  }
+
+  private applyMatrix(ctx: WebGLRenderingContext, feColorMatrix: number[], target: WebGLFramebuffer | null, source: WebGLTexture) {
+    const program = this.createWebGLProgram(ctx, this.vertexShaderSource, this.fragmentShaderSource);
 
     // Expose canvas width and height to shader via u_resolution
-    let resolutionLocation = ctx.getUniformLocation(program, 'u_resolution');
+    const resolutionLocation = ctx.getUniformLocation(program, 'u_resolution');
     ctx.uniform2f(resolutionLocation, this.canvasRef.width, this.canvasRef.height);
 
     // Modify the feColorMatrix to fit better with available shader datatypes by putting the multiplier in a separate vector
 
     // This is a little unrefined but we're dealing with a very specific known data structure
 
-    let cloneFeColorMatrix = feColorMatrix.slice();
+    const cloneFeColorMatrix = feColorMatrix.slice();
 
-    let feMultiplier = [];
+    const feMultiplier = [];
     feMultiplier.push(cloneFeColorMatrix.splice(3, 1)[0]);
     feMultiplier.push(cloneFeColorMatrix.splice(8, 1)[0]);
     feMultiplier.push(cloneFeColorMatrix.splice(12, 1)[0]);
     feMultiplier.push(cloneFeColorMatrix.splice(16, 1)[0]);
 
     // Expose feColorMatrix to shader via u_matrix
-    let matrixTransform = ctx.getUniformLocation(program, 'u_matrix');
+    const matrixTransform = ctx.getUniformLocation(program, 'u_matrix');
     ctx.uniformMatrix4fv(matrixTransform, false, new Float32Array(cloneFeColorMatrix));
 
-    let multiplier = ctx.getUniformLocation(program, 'u_multiplier');
+    const multiplier = ctx.getUniformLocation(program, 'u_multiplier');
     ctx.uniform4f(multiplier, feMultiplier[0], feMultiplier[1], feMultiplier[2], feMultiplier[3]);
 
     // Position rectangle vertices (2 triangles)
-    let positionLocation = ctx.getAttribLocation(program, 'a_position');
-    let buffer = ctx.createBuffer();
+    const positionLocation = ctx.getAttribLocation(program, 'a_position');
+    const buffer = ctx.createBuffer();
     ctx.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, buffer);
     ctx.bufferData(
       WebGLRenderingContext.ARRAY_BUFFER,
@@ -207,8 +250,8 @@ export class WebPhotoFilterComponent {
     ctx.vertexAttribPointer(positionLocation, 2, WebGLRenderingContext.FLOAT, false, 0, 0);
 
     //Position texture
-    let texCoordLocation = ctx.getAttribLocation(program, 'a_texCoord');
-    let texCoordBuffer = ctx.createBuffer();
+    const texCoordLocation = ctx.getAttribLocation(program, 'a_texCoord');
+    const texCoordBuffer = ctx.createBuffer();
     ctx.bindBuffer(WebGLRenderingContext.ARRAY_BUFFER, texCoordBuffer);
     ctx.bufferData(
       WebGLRenderingContext.ARRAY_BUFFER,
@@ -218,31 +261,41 @@ export class WebPhotoFilterComponent {
     ctx.enableVertexAttribArray(texCoordLocation);
     ctx.vertexAttribPointer(texCoordLocation, 2, WebGLRenderingContext.FLOAT, false, 0, 0);
 
-    // Create a texture.
-    let texture = ctx.createTexture();
-    ctx.bindTexture(WebGLRenderingContext.TEXTURE_2D, texture);
-    // Set the parameters so we can render any size image.
-    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_S, WebGLRenderingContext.CLAMP_TO_EDGE);
-    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_T, WebGLRenderingContext.CLAMP_TO_EDGE);
-    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MIN_FILTER, WebGLRenderingContext.NEAREST);
-    ctx.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MAG_FILTER, WebGLRenderingContext.NEAREST);
-    // Load the image into the texture.
-    ctx.texImage2D(
-      WebGLRenderingContext.TEXTURE_2D,
-      0,
-      WebGLRenderingContext.RGBA,
-      WebGLRenderingContext.RGBA,
-      WebGLRenderingContext.UNSIGNED_BYTE,
-      this.imgRef
-    );
+    // Bind the source and target and draw the two triangles
+    ctx.bindTexture(WebGLRenderingContext.TEXTURE_2D, source);
+    ctx.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, target);
+
+    // We may have to flip if last target
+    const flipY = target === null;
+    const uniformFlipY = ctx.getUniformLocation(program, 'flipY');
+    ctx.uniform1f(uniformFlipY, flipY ? -1 : 1);
 
     // Draw the rectangle.
     ctx.drawArrays(WebGLRenderingContext.TRIANGLES, 0, 6);
+  }
 
-    this.canvasDisplay = 'block';
+  private createFramebufferTexture(ctx: WebGLRenderingContext): {target: WebGLFramebuffer; source: WebGLTexture} {
+    const fbo: WebGLFramebuffer = ctx.createFramebuffer();
+    ctx.bindFramebuffer(ctx.FRAMEBUFFER, fbo);
 
-    // The filter was applied, we emit the canvas not the source image
-    this.emitFilterApplied(this.canvasRef, true);
+    const renderbuffer = ctx.createRenderbuffer();
+    ctx.bindRenderbuffer(ctx.RENDERBUFFER, renderbuffer);
+
+    const texture: WebGLTexture = ctx.createTexture();
+    ctx.bindTexture(ctx.TEXTURE_2D, texture);
+    ctx.texImage2D(ctx.TEXTURE_2D, 0, ctx.RGBA, this.imgRef.naturalWidth, this.imgRef.naturalHeight, 0, ctx.RGBA, ctx.UNSIGNED_BYTE, null);
+
+    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MAG_FILTER, ctx.LINEAR);
+    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MIN_FILTER, ctx.LINEAR);
+    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_WRAP_S, ctx.CLAMP_TO_EDGE);
+    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
+
+    ctx.framebufferTexture2D(ctx.FRAMEBUFFER, ctx.COLOR_ATTACHMENT0, ctx.TEXTURE_2D, texture, 0);
+
+    ctx.bindTexture(ctx.TEXTURE_2D, null);
+    ctx.bindFramebuffer(ctx.FRAMEBUFFER, null);
+
+    return {target: fbo, source: texture};
   }
 
   private hasValidWegGLContext(): boolean {
