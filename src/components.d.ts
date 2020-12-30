@@ -9,22 +9,9 @@ import { WebPhotoFilterResult } from "./types/web-photo-filter/web-photo-filter-
 export namespace Components {
     interface WebPhotoFilter {
         /**
-          * The filter to apply on the source image.
+          * A comma separated list of filter to apply on the source image. If no filter is provided, the source image as it will be displayed. Current filter are supported: 'sepia', 'blue_monotone', 'violent_tomato', 'greyscale', 'desaturate', 'brightness', 'saturation', 'contrast', 'hue', 'cookie', 'vintage', 'koda', 'technicolor', 'polaroid', 'bgr'.
          */
-        "filter": | 'sepia'
-    | 'blue_monotone'
-    | 'violent_tomato'
-    | 'greyscale'
-    | 'brightness'
-    | 'saturation'
-    | 'contrast'
-    | 'hue'
-    | 'cookie'
-    | 'vintage'
-    | 'koda'
-    | 'technicolor'
-    | 'polaroid'
-    | 'bgr';
+        "filter": string;
         /**
           * An optional level to apply the filter.
          */
@@ -49,22 +36,9 @@ declare global {
 declare namespace LocalJSX {
     interface WebPhotoFilter {
         /**
-          * The filter to apply on the source image.
+          * A comma separated list of filter to apply on the source image. If no filter is provided, the source image as it will be displayed. Current filter are supported: 'sepia', 'blue_monotone', 'violent_tomato', 'greyscale', 'desaturate', 'brightness', 'saturation', 'contrast', 'hue', 'cookie', 'vintage', 'koda', 'technicolor', 'polaroid', 'bgr'.
          */
-        "filter"?: | 'sepia'
-    | 'blue_monotone'
-    | 'violent_tomato'
-    | 'greyscale'
-    | 'brightness'
-    | 'saturation'
-    | 'contrast'
-    | 'hue'
-    | 'cookie'
-    | 'vintage'
-    | 'koda'
-    | 'technicolor'
-    | 'polaroid'
-    | 'bgr';
+        "filter"?: string;
         /**
           * An optional level to apply the filter.
          */

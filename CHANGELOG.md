@@ -1,3 +1,12 @@
+<a name="3.1.0"></a>
+
+# [3.1.0](https://github.com/peterpeterparker/web-photo-filter/compare/v3.0.0...v3.1.0) (2020-12-30)
+
+### Features
+
+- multiple filters support
+- new filter "desaturate"
+
 <a name="3.0.0"></a>
 
 # [3.0.0](https://github.com/peterpeterparker/web-photo-filter/compare/v2.3.0...v3.0.0) (2020-12-29)
