@@ -103,7 +103,7 @@ You can provide a unique filter or, a comma separated list of multiple filters.
 If you would like to start or process the result after the component did finish is processing, an event will be triggered containing the resulting image (no filter) or canvas. In addition, it contains also an indication telling you if WebGL is supported or not.
 
 ```html
-<web-photo-filter (filterLoad)="imageLoaded($event)" src="imgURI" filter="sepia"></web-photo-filter>
+<web-photo-filter onFilterLoad={($event) => imageLoaded($event)} src="imgURI" filter="sepia"></web-photo-filter>
 ```
 
 The description of the event is available in the interface `src/types/web-photo-filter-result.ts`
