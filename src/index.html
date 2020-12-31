@@ -141,6 +141,7 @@
                 <web-photo-filter
                   style="display: block"
                   id="showcase"
+                  filter="technicolor, saturation(1.6), contrast"
                   src="https://raw.githubusercontent.com/peterpeterparker/web-photo-filter/master/assets/demo/instagram.jpg"
                 ></web-photo-filter>
               </div>
@@ -607,8 +608,6 @@
           } else {
             console.log('WebGL is not supported by your current browser!');
           }
-        } else {
-          applyShowcase();
         }
       });
 
