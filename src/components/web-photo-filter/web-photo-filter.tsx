@@ -1,4 +1,4 @@
-import {Component, Event, EventEmitter, Prop, h, Fragment, State, Watch} from '@stencil/core';
+import {Component, Event, EventEmitter, Prop, h, Element, Watch} from '@stencil/core';
 
 import {WebPhotoFilterType} from '../../types/web-photo-filter/web-photo-filter-type';
 import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filter-result';
@@ -13,6 +13,8 @@ import {WebPhotoFilterResult} from '../../types/web-photo-filter/web-photo-filte
   shadow: true,
 })
 export class WebPhotoFilterComponent {
+  @Element() el: HTMLElement;
+
   /**
    * The source of the image.
    */
@@ -33,11 +35,7 @@ export class WebPhotoFilterComponent {
    */
   @Event() filterLoad: EventEmitter<WebPhotoFilterResult>;
 
-  @State()
-  private canvasDisplay: 'none' | 'block' = 'none';
-
   private imgRef!: HTMLImageElement;
-  private canvasRef!: HTMLCanvasElement;
 
   private createWebGLProgram(ctx, vertexShaderSource, fragmentShaderSource) {
     const compileShader = (shaderSource, shaderType) => {
@@ -99,12 +97,7 @@ export class WebPhotoFilterComponent {
     this.applyFilter();
   }
 
-  @Watch('src')
-  onSrcChange() {
-    this.applyFilter();
-  }
-
-  applyFilter() {
+  private applyFilter() {
     const filterList: string[] = this.filter?.split(',');
 
     const matrix: number[][] = filterList
@@ -136,21 +129,12 @@ export class WebPhotoFilterComponent {
     this.filterLoad.emit({webGLDetected: webGlState, result: result});
   }
 
-  private updateCanvasSize() {
-    this.canvasRef.width = this.imgRef?.naturalWidth;
-    this.canvasRef.height = this.imgRef?.naturalHeight;
-  }
-
   private desaturateImage(matrix: number[][]) {
-    if (!this.canvasRef) {
-      return;
-    }
-
-    this.updateCanvasSize();
+    const canvas: HTMLCanvasElement = this.createCanvas();
 
     let ctx: WebGLRenderingContext;
     try {
-      ctx = this.canvasRef.getContext('webgl', {preserveDrawingBuffer: true});
+      ctx = canvas.getContext('webgl', {preserveDrawingBuffer: true});
     } catch (e) {
       // In case we couldn't instantiate WebGL, do nothing
       this.emitFilterApplied(this.imgRef, false);
@@ -172,10 +156,30 @@ export class WebPhotoFilterComponent {
       this.applyMatrix(ctx, mat, index < matrix.length - 1 ? steps[index].target : null, index > 0 ? steps[index - 1].source : texture);
     });
 
-    this.canvasDisplay = 'block';
+    this.appendCanvas(canvas);
 
     // The filter was applied, we emit the canvas not the source image
-    this.emitFilterApplied(this.canvasRef, true);
+    this.emitFilterApplied(canvas, true);
+  }
+
+  private createCanvas() {
+    const canvas: HTMLCanvasElement = document.createElement('canvas');
+
+    canvas.setAttribute('part', 'canvas');
+
+    canvas.width = this.imgRef?.naturalWidth;
+    canvas.height = this.imgRef?.naturalHeight;
+
+    return canvas;
+  }
+
+  private appendCanvas(canvas: HTMLCanvasElement) {
+    const current: HTMLCanvasElement | null = this.el.shadowRoot.querySelector('canvas');
+    if (current) {
+      this.el.shadowRoot.removeChild(current);
+    }
+
+    this.el.shadowRoot.insertBefore(canvas, this.el.shadowRoot.firstChild);
   }
 
   private createRootTexture(ctx: WebGLRenderingContext): WebGLTexture {
@@ -203,7 +207,7 @@ export class WebPhotoFilterComponent {
 
     // Expose canvas width and height to shader via u_resolution
     const resolutionLocation = ctx.getUniformLocation(program, 'u_resolution');
-    ctx.uniform2f(resolutionLocation, this.canvasRef.width, this.canvasRef.height);
+    ctx.uniform2f(resolutionLocation, ctx.canvas.width, ctx.canvas.height);
 
     // Modify the feColorMatrix to fit better with available shader datatypes by putting the multiplier in a separate vector
 
@@ -312,21 +316,6 @@ export class WebPhotoFilterComponent {
   }
 
   render() {
-    return (
-      <Fragment>
-        <canvas
-          ref={(el) => (this.canvasRef = el as HTMLCanvasElement)}
-          part="canvas"
-          style={{display: this.canvasDisplay}}
-          role="img"
-          aria-hidden={true}></canvas>
-
-        {this.renderImage()}
-      </Fragment>
-    );
-  }
-
-  private renderImage() {
     // prettier-ignore
     // @ts-ignore
     return <img crossOrigin={'anonymous'}
