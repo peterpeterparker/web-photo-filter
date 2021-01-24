@@ -19,7 +19,7 @@
   "scripts": {
     "build": "stencil build --docs",
     "start": "stencil build --dev --watch --serve",
-    "web": "stencil build "
+    "web": "stencil build"
   },
   "dependencies": {},
   "devDependencies": {
